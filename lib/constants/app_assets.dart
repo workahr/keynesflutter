@@ -66,5 +66,6 @@ class AppAssets {
   static const String profileimg = 'assets/images/profileimg.png';
 
   static const String serviceImg = 'assets/images/services_img.png';
+  static const String keynesLogo = 'assets/images/keynes_logo.png';
 
 }
