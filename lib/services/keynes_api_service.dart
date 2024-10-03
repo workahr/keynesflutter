@@ -285,6 +285,25 @@ class KeynesApiService {
     }
   }
 
+  //get all Users
+  Future getAllUsers() async {
+    try {
+      final url = Uri.parse(
+          '${liveApiPath}users/getallusers');
+      final response = await client.get(
+        url,
+        headers: headerData,
+      );
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return response;
+      }
+    } catch (e) {
+      return e;
+    }
+  }
+
   // user Login With Otp
   Future userLoginWithOtp(postData) async {
     try {
@@ -814,10 +833,10 @@ class KeynesApiService {
     }
   }
 
-  // Save EntryWorkFromHome
-  Future saveEntryWorkFromHome(postData) async {
+  // Save Enquiry
+  Future saveEnquiry(postData) async {
     try {
-      final url = Uri.parse('${liveApiPath}EmployeeComWorkfromhome');
+      final url = Uri.parse('${liveApiPath}enquiries/create-enquiries');
       final response = await client.post(
         url,
         headers: headerData,

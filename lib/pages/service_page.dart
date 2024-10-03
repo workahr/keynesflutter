@@ -4,6 +4,7 @@ import '../models/service_list_model.dart';
 import '../services/comFuncService.dart';
 import '../services/keynes_api_service.dart';
 import '../widgets/button_widget.dart';
+import 'enquiry/add_enquiry_page.dart';
 
 class ServicePage extends StatefulWidget {
   const ServicePage({super.key});
@@ -98,13 +99,20 @@ class _ServicePageState extends State<ServicePage> {
                           ),
                           SizedBox(height: 18.0),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               ButtonWidget(
                                 title: 'Enquiry',
                                 width: MediaQuery.of(context).size.width / 2.7,
                                 onTap: () {
-                                  // Handle enquiry button tap
+                                   Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>  AddEnquiryPage(
+                                            serviceName: service.name.toString(),
+                                          )
+                                        ),
+                                      );
                                 },
                                 borderRadius: 12.0,
                                 color: AppColors.light,

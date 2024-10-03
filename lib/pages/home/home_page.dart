@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white),
                     SubHeadingWidget(
                       title: '    Doing more, for you!',
-                      color: Colors.black,
+                      color: Colors.white,
                       // fontWeight: FontWeight.bold,
                     ),
                   ],
@@ -42,14 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             )),
         centerTitle: true,
-        backgroundColor: Color(0xFF01519D),
+        backgroundColor: const Color(0xFF01519D),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-                padding: const EdgeInsets.all(6.0),
+            const Padding(
+                padding: EdgeInsets.all(6.0),
                 child: Text(
                   'About Us',
                   style: TextStyle(
@@ -58,8 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Color(0xFF01519D),
                   ),
                 )),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+           const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Text(
                 'We Are Leading Company In Dubai, UAE',
                 style: TextStyle(
@@ -69,24 +69,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: SubHeadingWidget(
-               title:  'KEYNES GROUP is growing rapidly into UAE’s leading company in delivering exceptional service. As the industry moves forward, so does our company. Our journey from a construction company to a conglomerate comprising of contracting and service industries has been filled with its fair share of trials. However, we can honestly say that today, our employees are richer in experience than their counterparts.',
+              Padding(
+              padding: const EdgeInsets.all(16.0),
+             child: SubHeadingWidget(
+               title:  'KEYNES GROUP is growing rapidly into UAE`s leading company in delivering exceptional service. As the industry moves forward, so does our company. Our journey from a construction company to a conglomerate comprising of contracting and service industries has been filled with its fair share of trials. However, we can honestly say that today, our employees are richer in experience than their counterparts.',
                 fontSize: 14,
                 textAlign: TextAlign.center,
                 color: AppColors.dark,
               ),
-            ),
-            SizedBox(height: 20),
+             ),
+            
+            const SizedBox(height: 20),
             Container(
                 //height: 100,
-                color: Color(0xFF01519D),
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                color: const Color(0xFF01519D),
+                child: const Padding(
+                    padding: EdgeInsets.all(16.0),
                     child: Column(children: [
                       Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -123,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           )),
                       Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding: EdgeInsets.all(20.0),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -159,18 +160,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ]))
                     ]))),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             SubHeadingWidget(
                 title: 'Trust and Worth',
                 fontSize: 15,
                 textAlign: TextAlign.center,
-                color: Color(0xFF01519D)),
+                color: const Color(0xFF01519D)),
             HeadingWidget(
               title: "Our Clients",
               fontSize: 20,
-              color: Color(0xFF01519D),
+              color: const Color(0xFF01519D),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
@@ -209,10 +210,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 )),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             HeadingWidget(
               title: 'Our Founder',
-              color: Color(0xFF01519D),
+              color: const Color(0xFF01519D),
               fontWeight: FontWeight.bold,
               fontSize: 18.0,
             ),
@@ -225,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontSize: 14,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Column(
               children: [
                 Image.asset(
@@ -239,13 +240,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 //   backgroundImage: AssetImage(
                 //       'assets/ceo_image.png'), // Replace with actual image path
                 // ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 HeadingWidget(
                   title: 'Thanveerjan Alikkal',
-                  color: Color(0xFF01519D),
+                  color: const Color(0xFF01519D),
                 ),
-                Text('Founder & CEO'),
-                SizedBox(height: 15.0),
+                const Text('Founder & CEO'),
+                const SizedBox(height: 15.0),
               ],
             ),
           ],

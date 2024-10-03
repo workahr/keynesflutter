@@ -16,6 +16,7 @@ import '../../widgets/custom_text_field_login.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 import '../dashboard/dashboard_page.dart';
+import '../dashboard_pages/dashboard_salesman.dart';
 import 'auth_validations.dart';
 import 'login_model.dart';
 
@@ -90,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const DashboardPage()
+                            builder: (context) => DashboardScreen()
                           ),
                         );
         } else {
