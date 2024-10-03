@@ -67,5 +67,11 @@ class AppAssets {
 
   static const String serviceImg = 'assets/images/services_img.png';
   static const String keynesLogo = 'assets/images/keynes_logo.png';
-
+  static const String kfcImg = 'assets/images/kfc_image.png';
+  static const String londonImg = 'assets/images/london_fish.png';
+  static const String uaeImg = 'assets/images/uae_change.png';
+  static const String lifeImg = 'assets/images/life_image.png';
+  static const String medicalcenterImg = 'assets/images/medical_center.png';
+  static const String jaleelImg = 'assets/images/jaleel_image.png';
+  static const String profileImg = 'assets/images/profile_image.png';
 }

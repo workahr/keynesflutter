@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/app_assets.dart';
 
-
 class MainContainer extends StatefulWidget {
   MainContainer({super.key, this.childWidget});
 
@@ -20,9 +19,7 @@ class _MainContainerState extends State<MainContainer>
   bool navBack = false;
 
   final List pageId = [1, 5, 8, 12, 15];
-  static List<Widget> pageOptions = <Widget>[
-   const HomePage()
-  ];
+  static List<Widget> pageOptions = <Widget>[HomeScreen()];
 
   void _onItemTapped(int index) async {
     if (index == 2) {
@@ -109,7 +106,8 @@ class _MainContainerState extends State<MainContainer>
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                AppAssets.serviceImg,height: 20.0,
+                AppAssets.serviceImg,
+                height: 20.0,
               ),
               //icon: Icon(Icons.book),
               label: 'Service',
@@ -136,4 +134,3 @@ class _MainContainerState extends State<MainContainer>
     );
   }
 }
-
