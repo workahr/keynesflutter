@@ -95,6 +95,8 @@ class AppColors {
    static const Color gold = Color(0xFFFCB019);
    static const Color black = Color(0xFF2A2A2A);
    static const Color shadowBlack = Color(0xFF6E6E6E);
+   static const Color blue = Color(0xFF01519D);
+
    
    
 

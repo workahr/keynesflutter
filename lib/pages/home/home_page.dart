@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:keynes/constants/app_colors.dart';
 import 'package:keynes/widgets/heading_widget.dart';
 import 'package:keynes/widgets/sub_heading_widget.dart';
 
@@ -10,13 +11,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +71,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                'KEYNES GROUP is growing rapidly into UAE’s leading company in delivering exceptional service. As the industry moves forward, so does our company. Our journey from a construction company to a conglomerate comprising of contracting and service industries has been filled with its fair share of trials. However, we can honestly say that today, our employees are richer in experience than their counterparts.',
-                style: TextStyle(fontSize: 16),
+              child: SubHeadingWidget(
+               title:  'KEYNES GROUP is growing rapidly into UAE’s leading company in delivering exceptional service. As the industry moves forward, so does our company. Our journey from a construction company to a conglomerate comprising of contracting and service industries has been filled with its fair share of trials. However, we can honestly say that today, our employees are richer in experience than their counterparts.',
+                fontSize: 14,
                 textAlign: TextAlign.center,
+                color: AppColors.dark,
               ),
             ),
             SizedBox(height: 20),
@@ -218,13 +213,16 @@ class _HomeScreenState extends State<HomeScreen> {
             HeadingWidget(
               title: 'Our Founder',
               color: Color(0xFF01519D),
+              fontWeight: FontWeight.bold,
+              fontSize: 18.0,
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'We KEYNES steadfast focus is on providing an outstanding service to our customers. We value the mix of strengths, insights this approach brings, and we are proud to have built a team with a diversity of perspectives and background. Our priorities, commitments will always remain the same: to deliver a high quality service, to manage all aspects of the development process and to ensure that all of our clients receive the right product on time and to expectations.',
+              child: SubHeadingWidget(
+                title: 'We KEYNES steadfast focus is on providing an outstanding service to our customers. We value the mix of strengths, insights this approach brings, and we are proud to have built a team with a diversity of perspectives and background. Our priorities, commitments will always remain the same: to deliver a high quality service, to manage all aspects of the development process and to ensure that all of our clients receive the right product on time and to expectations.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
+                color: AppColors.dark,
+                fontSize: 14,
               ),
             ),
             SizedBox(height: 20),
@@ -232,7 +230,9 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Image.asset(
                   AppAssets.profileImg,
-                  height: 90.0,
+                  //height: 130.0,
+                  fit: BoxFit.fill,
+                  //width: 140.0,
                 ),
                 // CircleAvatar(
                 //   radius: 50,
@@ -245,6 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Color(0xFF01519D),
                 ),
                 Text('Founder & CEO'),
+                SizedBox(height: 15.0),
               ],
             ),
           ],

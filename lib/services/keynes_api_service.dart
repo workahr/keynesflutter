@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/constants.dart';
 
-class CabsApiService {
+class KeynesApiService {
   static String liveApiPath = AppConstants.apiBaseUrl;
   static String liveImgPath = AppConstants.imgBaseUrl;
 
@@ -18,7 +18,7 @@ class CabsApiService {
 
   static var headerData;
 
-  CabsApiService() {
+  KeynesApiService() {
     getBearerToken();
   }
   getBearerToken() async {
@@ -248,13 +248,29 @@ class CabsApiService {
     throw Exception(message ?? 'Network Error');
   }
 
-  // user  login
-  Future userLogin(strUsername, strPassword) async {
+    // user  login
+  Future userLogin(postData) async {
     try {
-      final url = Uri.parse('${liveApiPath}ValidatePassword?strusername=' +
-          strUsername +
-          '&strPassword=' +
-          strPassword);
+      final url = Uri.parse('${liveApiPath}login');
+      final response = await client.post(url,
+          headers: headerData, body: jsonEncode(postData));
+      if (response.statusCode == 200) {
+        final json = response.body;
+        return json;
+      } else {
+        throw Exception(
+            'Failed to login . Status code: ${response.statusCode} ${response.toString()}');
+      }
+    } catch (e) {
+      return e;
+    }
+  }
+
+  //get all Services
+  Future getAllServices() async {
+    try {
+      final url = Uri.parse(
+          '${liveApiPath}services/getallserviceswithoutToken');
       final response = await client.get(
         url,
         headers: headerData,
@@ -262,11 +278,10 @@ class CabsApiService {
       if (response.statusCode == 200) {
         return response.body;
       } else {
-        return response.body;
+        return response;
       }
     } catch (e) {
-      print('error $e');
-      handleError();
+      return e;
     }
   }
 

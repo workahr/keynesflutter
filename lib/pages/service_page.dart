@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import '../constants/app_colors.dart';
+import '../models/service_list_model.dart';
+import '../services/comFuncService.dart';
+import '../services/keynes_api_service.dart';
+import '../widgets/button_widget.dart';
 
 class ServicePage extends StatefulWidget {
   const ServicePage({super.key});
@@ -8,94 +13,112 @@ class ServicePage extends StatefulWidget {
 }
 
 class _ServicePageState extends State<ServicePage> {
+  final KeynesApiService apiService = KeynesApiService();
+
+  @override
+  void initState() {
+    getAllServices();
+    super.initState();
+  }
+
+  List<ServicesListData>? servicesList = [];
+  List<ServicesListData>? servicesListAll = [];
+
+  Future getAllServices() async {
+    var result = await apiService.getAllServices();
+    print('hi $result');
+    ServiceListModel response = serviceListModelFromJson(result);
+    if (response.status.toString() == 'SUCCESS') {
+      setState(() {
+        servicesList = response.list;
+        servicesListAll = servicesList;
+        print('hello $servicesList');
+      });
+    } else {
+      setState(() {
+        servicesList = [];
+        servicesListAll = [];
+      });
+      showInSnackBar(context, response.status);
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: screenHeight * 0.15,
+        backgroundColor: Colors.white,
+        toolbarHeight: screenHeight * 0.10,
         title: Text(
           'Services',
           style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF0151AF)),
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF0151AF),
+          ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.only(
-            top: screenHeight * 0.02,
-            left: screenWidth * 0.03,
-            right: screenWidth * 0.03),
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  color: Color(0xFF0151AF),
-                  borderRadius: BorderRadius.circular(18)),
-              height: screenHeight * 0.2,
+      body: servicesList == null || servicesList!.isEmpty
+          ? Center(child: CircularProgressIndicator()) // Loading indicator
+          : SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.only(
-                    left: screenWidth * 0.03,
-                    right: screenWidth * 0.03,
-                    top: screenHeight * 0.03,
-                    bottom: screenHeight * 0.03),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Color(0xFFFFFFFF),
-                              borderRadius: BorderRadius.circular(18)),
-                          height: screenHeight * 0.13,
-                          width: screenWidth * 0.2,
-                        ),
-                        SizedBox(
-                          width: screenWidth * 0.03,
-                        ),
-                        Text(
-                          'Keynes Approval',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        ElevatedButton(
-                            style: ButtonStyle(
-                              minimumSize: WidgetStatePropertyAll(
-                                  Size(screenWidth * 0.1, screenHeight * 0.07)),
-                              shape: WidgetStatePropertyAll(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8))),
-                              foregroundColor:
-                                  WidgetStatePropertyAll(Colors.white),
-                            ),
-                            onPressed: () {},
-                            child: Text(
-                              'Enquiry',
-                              style: TextStyle(
-                                  color: Color(0xFF0151AF),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600),
-                            )),
-                      ],
-                    )
-                  ],
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: servicesList!.map((service) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(vertical: 8.0),
+                      decoration: BoxDecoration(
+                        color: Color(0xFF0151AF),
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          // Display service name dynamically
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: Text(
+                                  service.name.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 18.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ButtonWidget(
+                                title: 'Enquiry',
+                                width: MediaQuery.of(context).size.width / 2.7,
+                                onTap: () {
+                                  // Handle enquiry button tap
+                                },
+                                borderRadius: 12.0,
+                                color: AppColors.light,
+                                titleColor: AppColors.blue,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
-            )
-          ],
-        ),
-      ),
+            ),
     );
   }
 }

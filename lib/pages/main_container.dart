@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:keynes/pages/auth/login_page.dart';
 import 'package:keynes/pages/home/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/app_assets.dart';
+import 'service_page.dart';
 
 class MainContainer extends StatefulWidget {
   MainContainer({super.key, this.childWidget});
@@ -19,18 +21,19 @@ class _MainContainerState extends State<MainContainer>
   bool navBack = false;
 
   final List pageId = [1, 5, 8, 12, 15];
-  static List<Widget> pageOptions = <Widget>[HomeScreen()];
+  static List<Widget> pageOptions = <Widget>[
+    HomeScreen(),
+    ServicePage(),
+    LoginPage()
+    ];
 
   void _onItemTapped(int index) async {
-    if (index == 2) {
-      // Handle logout
-      await _handleLogout();
-    } else {
+   
       // Handle other navigation
       setState(() {
         _selectedIndex = index;
       });
-    }
+    
   }
 
   @override
