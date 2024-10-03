@@ -74,4 +74,13 @@ class AppAssets {
   static const String medicalcenterImg = 'assets/images/medical_center.png';
   static const String jaleelImg = 'assets/images/jaleel_image.png';
   static const String profileImg = 'assets/images/profile_image.png';
+  static const String projecticon = 'assets/images/project_icon.png';
+  static const String increaseicon = 'assets/images/increase_icon.png';
+  static const String fileicon = 'assets/images/file_icon.png';
+  static const String personsicon = 'assets/images/persons_icon.png';
+  static const String towericon1 = 'assets/images/tower_icon1.png';
+  static const String towericon2 = 'assets/images/tower_icon2.png';
+  static const String increaseicon2 = 'assets/images/increase_icon2.png';
+  static const String dot3 = 'assets/images/3dot.png';
+  static const String containericon = 'assets/images/container.png';
 }
