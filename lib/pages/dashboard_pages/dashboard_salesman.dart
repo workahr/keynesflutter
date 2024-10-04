@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../constants/app_assets.dart';
+import '../../constants/app_colors.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             children: [
               Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey, width: 0.80),
+                    border: Border.all(color: AppColors.lightGrey, width: 0.80),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Padding(
@@ -62,7 +63,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                             SizedBox(height: 10),
                             Divider(
-                              thickness: 1,
+                              thickness: 0.5,
+                              color: AppColors.lightGrey,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

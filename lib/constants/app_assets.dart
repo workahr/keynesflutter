@@ -83,4 +83,6 @@ class AppAssets {
   static const String increaseicon2 = 'assets/images/increase_icon2.png';
   static const String dot3 = 'assets/images/3dot.png';
   static const String containericon = 'assets/images/container.png';
+  static const String keynesServiceIcon = 'assets/images/keynes_service_icon.png';
+
 }

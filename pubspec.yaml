@@ -44,8 +44,17 @@ dependencies:
   dropdown_search: ^5.0.6
   http: ^1.2.2
   pinput: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
   flutter_svg: ^2.0.10+1
   dotted_border: ^2.1.0
+
+flutter_icons:
+  
+  ios: true
+  android: true
+  image_path: "assets/images/keynes_logo1.png" 
+  adaptive_icon_background: "#FFFFFF" 
+  adaptive_icon_foreground: "assets/images/keynes_logo1.png"
 
 dev_dependencies:
   flutter_test:
