@@ -248,7 +248,7 @@ class KeynesApiService {
     throw Exception(message ?? 'Network Error');
   }
 
-    // user  login
+  // user  login
   Future userLogin(postData) async {
     try {
       final url = Uri.parse('${liveApiPath}login');
@@ -269,8 +269,26 @@ class KeynesApiService {
   //get all Services
   Future getAllServices() async {
     try {
-      final url = Uri.parse(
-          '${liveApiPath}services/getallserviceswithoutToken');
+      final url =
+          Uri.parse('${liveApiPath}services/getallserviceswithoutToken');
+      final response = await client.get(
+        url,
+        headers: headerData,
+      );
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return response;
+      }
+    } catch (e) {
+      return e;
+    }
+  }
+
+  //get all Enquirys
+  Future getAllEnquirys() async {
+    try {
+      final url = Uri.parse('${liveApiPath}enquiries/getallenquiries');
       final response = await client.get(
         url,
         headers: headerData,
@@ -288,8 +306,7 @@ class KeynesApiService {
   //get all Users
   Future getAllUsers() async {
     try {
-      final url = Uri.parse(
-          '${liveApiPath}users/getallusers');
+      final url = Uri.parse('${liveApiPath}users/getallusers');
       final response = await client.get(
         url,
         headers: headerData,

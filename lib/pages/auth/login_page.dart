@@ -16,11 +16,9 @@ import '../../widgets/custom_text_field_login.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 import '../dashboard/dashboard_page.dart';
-import '../dashboard_pages/dashboard_salesman.dart';
+import '../dashboard_pages/dashboard_screen.dart';
 import 'auth_validations.dart';
 import 'login_model.dart';
-
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -30,11 +28,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
- 
   final KeynesApiService apiService = KeynesApiService();
 
-
- AuthValidation authValidation = AuthValidation();
+  AuthValidation authValidation = AuthValidation();
 
   BaseController baseCtrl = Get.put(BaseController());
 
@@ -48,9 +44,9 @@ class _LoginPageState extends State<LoginPage> {
 
   var obscureText = true;
 
-   @override
+  @override
   void initState() {
- //usernameCtrl.text ="suntech_dev_team";
+    //usernameCtrl.text ="suntech_dev_team";
     super.initState();
   }
 
@@ -71,7 +67,8 @@ class _LoginPageState extends State<LoginPage> {
       return null;
     };
   }
- String? dropdownValue;
+
+  String? dropdownValue;
   Future login() async {
     try {
       if (loginForm.currentState!.validate()) {
@@ -88,12 +85,10 @@ class _LoginPageState extends State<LoginPage> {
           prefs.setString('auth_token', response.authToken ?? '');
 
           //Navigator.pushNamed(context, '/');
-            Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DashboardScreen()
-                          ),
-                        );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DashboardScreen()),
+          );
         } else {
           showInSnackBar(context, response.message.toString());
         }
@@ -104,16 +99,16 @@ class _LoginPageState extends State<LoginPage> {
       showInSnackBar(context, error.toString());
     }
   }
-   List<DropdownMenuItem<String>> items = [
-      // Dynamic items for dropdown
-      DropdownMenuItem(
-        value: 'suntech_dev_team',
-        child: Text('suntech_dev_team'),
-      ),
-     
-    ];
 
-      errValidateUserName(String? value) {
+  List<DropdownMenuItem<String>> items = [
+    // Dynamic items for dropdown
+    DropdownMenuItem(
+      value: 'suntech_dev_team',
+      child: Text('suntech_dev_team'),
+    ),
+  ];
+
+  errValidateUserName(String? value) {
     return (value) {
       if (value.isEmpty) {
         return 'User Name is required';
@@ -147,7 +142,6 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: 40.0,
                       ),
-
                       Center(
                         child: Image.asset(
                           AppAssets.keynesLogo,
@@ -156,70 +150,62 @@ class _LoginPageState extends State<LoginPage> {
                           // width: MediaQuery.of(context).size.width - 20.0,
                         ),
                       ),
-                      
                       const SizedBox(
                         height: 35,
                       ),
-
-                       Padding(padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
-                     child:
-                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          HeadingWidget(
-                            title: 'Login',
-                            color: AppColors.dark,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-
-                        ],
-                      ), ),
-                    
-
-                     CustomeTextField(
-                           labelText: 'Username',
-                            control: usernameCtrl,
-                            validator: errValidateUseranme(usernameCtrl.text),
-                            width: MediaQuery.of(context).size.width / 1.1,
-                          ),
-                
-
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 6.0, vertical: 2.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            HeadingWidget(
+                              title: 'Login',
+                              color: AppColors.dark,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ],
+                        ),
+                      ),
+                      CustomeTextField(
+                        labelText: 'Username',
+                        control: usernameCtrl,
+                        validator: errValidateUseranme(usernameCtrl.text),
+                        width: MediaQuery.of(context).size.width / 1.1,
+                      ),
                       const SizedBox(
                         height: 10.0,
                       ),
-
                       CustomeTextField(
-                            obscureText: obscureText,
-                            labelText: 'Password',
-                            control: passwordCtrl,
-                            validator: authValidation
-                                .errValidatePasswordForLogin(passwordCtrl.text),
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  obscureText = !obscureText;
-                                });
-                              },
-                              icon: obscureText
-                                  ? Icon(
-                                      MdiIcons.eye,
-                                    )
-                                  : Icon(
-                                      MdiIcons.eyeOff,
-                                    ),
-                            ),
-                            width: MediaQuery.of(context).size.width / 1.1,
-                          ),
-
+                        obscureText: obscureText,
+                        labelText: 'Password',
+                        control: passwordCtrl,
+                        validator: authValidation
+                            .errValidatePasswordForLogin(passwordCtrl.text),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              obscureText = !obscureText;
+                            });
+                          },
+                          icon: obscureText
+                              ? Icon(
+                                  MdiIcons.eye,
+                                )
+                              : Icon(
+                                  MdiIcons.eyeOff,
+                                ),
+                        ),
+                        width: MediaQuery.of(context).size.width / 1.1,
+                      ),
                       const SizedBox(
                         height: 37.0,
                       ),
-
                       ButtonWidget(
                         title: 'Login',
                         width: MediaQuery.of(context).size.width / 1.3,
-                        onTap: (){
+                        onTap: () {
                           login();
                         },
                         borderRadius: 12.0,
@@ -228,7 +214,6 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 20.0,
                       ),
-                     
                     ],
                   ),
                 ),
