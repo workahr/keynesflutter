@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:keynes/pages/main_container.dart';
 import 'package:keynes/widgets/heading_widget.dart';
 
 import '../../constants/app_colors.dart';
@@ -244,7 +245,7 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const ServicePage(),
+            builder: (context) => MainContainer(childWidget: const ServicePage()),
           ),
         );
       } else {

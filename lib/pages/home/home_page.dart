@@ -43,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
         centerTitle: true,
         backgroundColor: const Color(0xFF01519D),
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(

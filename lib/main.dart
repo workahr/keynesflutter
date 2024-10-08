@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -13,13 +14,23 @@ import 'controllers/base_controller.dart';
 import 'package:flutter/material.dart';
 import 'constants/app_localizations.dart';
 import 'constants/constants.dart';
+import 'services/firebase_services/firebase_api_services.dart';
 
-
+final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+   WidgetsFlutterBinding.ensureInitialized();
+
+if(!kIsWeb){
+  await Firebase.initializeApp();
+  await FirebaseAPIServices().initNotifications();
+}
 
   BaseController baseCtrl = Get.put(BaseController());
+
+  String? token = baseCtrl.fbUserId;
+  
+  print("token $token");
 
   runApp(MyApp());
 }
