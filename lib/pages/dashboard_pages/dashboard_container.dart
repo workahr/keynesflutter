@@ -3,35 +3,59 @@ import 'package:keynes/pages/auth/login_page.dart';
 import 'package:keynes/pages/home/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants/app_assets.dart';
-import 'service_page.dart';
+import '../../constants/app_assets.dart';
+import '../chat/chat_page.dart';
+import '../main_container.dart';
+import '../service_page.dart';
+import 'dashboard_adminscreen.dart';
+import 'dashboard_screen.dart';
 
-class MainContainer extends StatefulWidget {
-  MainContainer({super.key, this.childWidget});
+class DashboardContainer extends StatefulWidget {
+  DashboardContainer({super.key, this.childWidget});
 
   final Widget? childWidget;
 
   @override
-  State<MainContainer> createState() => _MainContainerState();
+  State<DashboardContainer> createState() => _DashboardContainerState();
 }
 
-class _MainContainerState extends State<MainContainer>
+class _DashboardContainerState extends State<DashboardContainer>
     with WidgetsBindingObserver {
   int _selectedIndex = 0;
   bool navBack = false;
 
   final List pageId = [1, 5, 8, 12, 15];
   static List<Widget> pageOptions = <Widget>[
-    HomeScreen(),
-    const ServicePage(),
-    const LoginPage()
+    Dashboard_adminscreen(),
+    // DashboardScreen(),
+    ServicePage(),
+    ChatPage(),
   ];
 
   void _onItemTapped(int index) async {
-    // Handle other navigation
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 3) {
+      // Handle logout
+      await _handleLogout();
+    } else {
+      // Handle other navigation
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
+
+  Future<void> _handleLogout() async {
+    // Clear SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
+    // Navigate to Login Page
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MainContainer(childWidget: const LoginPage()),
+      ),
+    );
   }
 
   @override
@@ -75,16 +99,6 @@ class _MainContainerState extends State<MainContainer>
     }
   }
 
-  Future<void> _handleLogout() async {
-    // Clear SharedPreferences
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-
-    // Navigate to Login Page
-    Navigator.pushNamedAndRemoveUntil(
-        context, '/login', ModalRoute.withName('/login'));
-  }
-
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -113,16 +127,13 @@ class _MainContainerState extends State<MainContainer>
               //icon: Icon(Icons.book),
               label: 'Service',
             ),
-            // BottomNavigationBarItem(
-            //   icon: Image.asset(
-            //     AppAssets.bookmarkIcon,
-            //   ),
-            //   //  icon: Icon(Icons.add),
-            //   label: 'Add Cars',
-            // ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.login), // Correct logout icon
-              label: 'Login',
+              icon: Icon(Icons.chat),
+              label: 'Chat',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.logout), // Correct logout icon
+              label: 'Log Out',
             ),
           ],
           currentIndex: _selectedIndex,

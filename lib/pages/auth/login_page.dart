@@ -16,6 +16,8 @@ import '../../widgets/custom_text_field_login.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 import '../dashboard/dashboard_page.dart';
+import '../dashboard_pages/dashboard_adminscreen.dart';
+import '../dashboard_pages/dashboard_container.dart';
 import '../dashboard_pages/dashboard_screen.dart';
 import 'auth_validations.dart';
 import 'login_model.dart';
@@ -87,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
           //Navigator.pushNamed(context, '/');
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => DashboardScreen()),
+            MaterialPageRoute(builder: (context) => DashboardContainer()),
           );
         } else {
           showInSnackBar(context, response.message.toString());
