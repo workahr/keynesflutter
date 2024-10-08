@@ -197,7 +197,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           style: TextStyle(color: Colors.white),
         ),
         iconTheme: IconThemeData(
-          color: Colors.white, // Change drawer icon color to white
+          color: Colors.white,
         ),
         backgroundColor: Color(0xFF01519D),
         actions: [

@@ -321,6 +321,25 @@ class KeynesApiService {
     }
   }
 
+  //get all assigned person
+  Future getassignedperson(id) async {
+    try {
+      final url =
+          Uri.parse('${liveApiPath}enquiries/list-assignedperson?type=$id');
+      final response = await client.get(
+        url,
+        headers: headerData,
+      );
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return response;
+      }
+    } catch (e) {
+      return e;
+    }
+  }
+
   // user Login With Otp
   Future userLoginWithOtp(postData) async {
     try {

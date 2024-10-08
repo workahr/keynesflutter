@@ -13,25 +13,24 @@ import '../../widgets/custom_autocomplete_widget.dart';
 import '../../widgets/custom_text_field.dart';
 import '../auth/auth_validations.dart';
 import '../service_page.dart';
+import 'assignperson_list_model.dart';
 import 'enquiry_add_model.dart';
 
 class AddEnquiryPage extends StatefulWidget {
-   String? serviceName;
-   AddEnquiryPage({super.key,this.serviceName});
+  String? serviceName;
+  AddEnquiryPage({super.key, this.serviceName});
 
   @override
   State<AddEnquiryPage> createState() => _AddEnquiryPageState();
 }
 
 class _AddEnquiryPageState extends State<AddEnquiryPage> {
-
   final _formKey = GlobalKey<FormState>();
-   final KeynesApiService apiService = KeynesApiService();
+  final KeynesApiService apiService = KeynesApiService();
 
   final GlobalKey<FormState> enquiryForm = GlobalKey<FormState>();
 
   AuthValidation authValidation = AuthValidation();
-
 
   TextEditingController userIdController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
@@ -44,26 +43,22 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
   TextEditingController notesCtrl = TextEditingController();
   TextEditingController addressCtrl = TextEditingController();
 
-   @override
+  @override
   void initState() {
     print(widget.serviceName);
     getAllServices();
-     getAllUsers();
+    getAllUsers();
     super.initState();
   }
 
-
-selectedServicesArray() {
-
-   
+  selectedServicesArray() {
     List result;
-  
-        if(servicesList!.isNotEmpty){
 
+    if (servicesList!.isNotEmpty) {
       result = servicesList!
           .where((element) => element.name == widget.serviceName)
           .toList();
-     
+
       if (result.isNotEmpty) {
         setState(() {
           selectedServicesArr = result[0];
@@ -82,42 +77,37 @@ selectedServicesArray() {
         selectedServicesArr = null;
       });
     }
-  
-    }
-   List<ServicesListData>? servicesList = [];
+  }
+
+  List<ServicesListData>? servicesList = [];
   List<ServicesListData>? servicesListAll = [];
 
   var selectedServicesArr;
   String? selectedService;
   int? selectedServiceId;
 
-
-    var selectedReferArr;
+  var selectedReferArr;
   String? selectedRefer;
   int? selectedReferId;
 
-bool referPerson = false;
-  List referList =[
-    {
-      "name": "App",
-      "value": 1
-    },
-     {
-      "name": "Sales Executive",
-      "value": 2
-    },
-     {
-      "name": "Call",
-      "value": 3
-    },
-     {
-      "name": "Reference",
-      "value": 4
-    },
-     {
-      "name": "None",
-      "value": 5
-    },
+  bool referPerson = false;
+  List referList = [
+    {"name": "App", "value": 1},
+    {"name": "Sales Executive", "value": 2},
+    {"name": "Call", "value": 3},
+    {"name": "Reference", "value": 4},
+    {"name": "None", "value": 5},
+  ];
+
+  var selectedassignedpersonArr;
+  String? selectedassignedperson;
+  int? selectedassignedpersonId;
+
+  bool assignedPerson = false;
+  List assignedList = [
+    {"name": "Sales Executive", "value": 1},
+    {"name": "Engineer", "value": 2},
+    {"name": "Accountant", "value": 3},
   ];
 
   Future getAllServices() async {
@@ -141,12 +131,10 @@ bool referPerson = false;
     setState(() {});
   }
 
-
-   List<UserListData>? userList = [];
+  List<UserListData>? userList = [];
   List<UserListData>? userListAll = [];
 
-
-    var selectedUserArr;
+  var selectedUserArr;
   String? selectedUser;
   int? selectedUserId;
 
@@ -170,9 +158,34 @@ bool referPerson = false;
     setState(() {});
   }
 
+  List<AssignPerson>? assignedperList = [];
+  List<AssignPerson>? assignedListAll = [];
 
+  var selectedAssignedArr;
+  String? selectedAssigned;
+  int? selectedAssignedId;
 
-   errValidateusername(String? value) {
+  Future getassignedperson() async {
+    var result = await apiService.getassignedperson(selectedassignedpersonId);
+    print('hi $result');
+    AssignpersonListModel response = assignpersonListModelFromJson(result);
+    if (response.status.toString() == 'SUCCESS') {
+      setState(() {
+        assignedperList = response.list;
+        assignedListAll = assignedperList;
+        print('hello $assignedperList');
+      });
+    } else {
+      setState(() {
+        assignedperList = [];
+        assignedListAll = [];
+      });
+      showInSnackBar(context, response.status);
+    }
+    setState(() {});
+  }
+
+  errValidateusername(String? value) {
     return (value) {
       if (value.isEmpty) {
         return 'User Name is required';
@@ -199,7 +212,6 @@ bool referPerson = false;
     };
   }
 
-
   Future saveEnquiry() async {
     if (enquiryForm.currentState!.validate()) {
       // DateTime parsedDate =
@@ -215,7 +227,9 @@ bool referPerson = false;
         "notes": notesCtrl.text,
         "refer_type": selectedReferId,
         "refer_person": selectedUserId,
-        "service_id":selectedServiceId,
+        "assigned_for": selectedassignedpersonId,
+        "assigned_person": selectedAssignedId,
+        "service_id": selectedServiceId,
         "enquiry_status": "New",
       };
       print('postData $postData');
@@ -245,62 +259,60 @@ bool referPerson = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.light,
+        backgroundColor: AppColors.light,
         appBar: AppBar(
             //automaticallyImplyLeading: false,
             title: HeadingWidget(
-              title:  "Enquiry",
-             color: AppColors.blue,
-             fontSize: 18.0,
-             fontWeight: FontWeight.bold,
+              title: "Enquiry",
+              color: AppColors.blue,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
             ),
-             
             backgroundColor: AppColors.light),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              key: enquiryForm,
-              child: Column(
-                children: [
-                  CustomeTextField(
-                    control: userNameController,
-                    validator: errValidateusername(userNameController.text),
-                    labelText: 'Name',
-                    width: MediaQuery.of(context).size.width - 10,
-                  ),
-                  //SizedBox(height: 16),
-                  CustomeTextField(
-                    control: emailAddressCtrl,
-                    validator: authValidation
-                                .errValidateEmail(emailAddressCtrl.text),
-                    labelText: 'Email',
-                    width: MediaQuery.of(context).size.width - 10,
-                  ),
+            child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    key: enquiryForm,
+                    child: Column(children: [
+                      CustomeTextField(
+                        control: userNameController,
+                        validator: errValidateusername(userNameController.text),
+                        labelText: 'Name',
+                        width: MediaQuery.of(context).size.width - 10,
+                      ),
+                      //SizedBox(height: 16),
+                      CustomeTextField(
+                        control: emailAddressCtrl,
+                        validator: authValidation
+                            .errValidateEmail(emailAddressCtrl.text),
+                        labelText: 'Email',
+                        width: MediaQuery.of(context).size.width - 10,
+                      ),
 
-                  CustomeTextField(
-                          labelText: 'Contact',
-                          width: MediaQuery.of(context).size.width / 1.1,
-                          control: mobileNoCtrl,
-                          validator: authValidation
-                              .errValidateMobileNo(mobileNoCtrl.text),
-                          type: const TextInputType.numberWithOptions(),
-                          inputFormaters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^-?(\d+)?\.?\d{0,11}'))
-                          ],
-                        ),
+                      CustomeTextField(
+                        labelText: 'Contact',
+                        width: MediaQuery.of(context).size.width / 1.1,
+                        control: mobileNoCtrl,
+                        validator: authValidation
+                            .errValidateMobileNo(mobileNoCtrl.text),
+                        type: const TextInputType.numberWithOptions(),
+                        inputFormaters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'^-?(\d+)?\.?\d{0,11}'))
+                        ],
+                      ),
 
-                         CustomeTextField(
-                    control: addressCtrl,
-                    validator: errValidateAddress(addressCtrl.text),
-                    labelText: 'Address',
-                    width: MediaQuery.of(context).size.width - 10,
-                  ),
+                      CustomeTextField(
+                        control: addressCtrl,
+                        validator: errValidateAddress(addressCtrl.text),
+                        labelText: 'Address',
+                        width: MediaQuery.of(context).size.width - 10,
+                      ),
 
-                   if(servicesList != null)
-                    CustomAutoCompleteWidget(
+                      if (servicesList != null)
+                        CustomAutoCompleteWidget(
                           width: MediaQuery.of(context).size.width / 1.1,
                           selectedItem: selectedServicesArr,
                           labelText: 'Services',
@@ -313,33 +325,30 @@ bool referPerson = false;
                           valArr: servicesList,
                         ),
 
-                        CustomAutoCompleteWidget(
-                          width: MediaQuery.of(context).size.width / 1.1,
-                          selectedItem: selectedReferArr,
-                          labelText: 'Refer Type',
-                          labelField: (item) => item["name"],
-                          onChanged: (value) {
-                            setState(() {
-                                selectedRefer = value["name"];
+                      CustomAutoCompleteWidget(
+                        width: MediaQuery.of(context).size.width / 1.1,
+                        selectedItem: selectedReferArr,
+                        labelText: 'Refer Type',
+                        labelField: (item) => item["name"],
+                        onChanged: (value) {
+                          setState(() {
+                            selectedRefer = value["name"];
                             selectedReferId = value["value"];
                             print(selectedRefer);
-                              if(value["value"] == 4){
-                                referPerson = true;
-                              }
-                              else{
-                                referPerson = false;
-                                selectedUser ="";
-                                selectedUserId = null;
-                              }
-                            });
-                          
-                          },
-                          valArr: referList,
-                        ),
+                            if (value["value"] == 4) {
+                              referPerson = true;
+                            } else {
+                              referPerson = false;
+                              selectedUser = "";
+                              selectedUserId = null;
+                            }
+                          });
+                        },
+                        valArr: referList,
+                      ),
 
-
-                        if(userList != null && referPerson == true)
-                    CustomAutoCompleteWidget(
+                      if (userList != null && referPerson == true)
+                        CustomAutoCompleteWidget(
                           width: MediaQuery.of(context).size.width / 1.1,
                           selectedItem: selectedUserArr,
                           labelText: 'Refer Person',
@@ -352,32 +361,59 @@ bool referPerson = false;
                           valArr: userList,
                         ),
 
-                          CustomeTextField(
-                    control: notesCtrl,
-                    validator: errValidateNotes(notesCtrl.text),
-                    labelText: 'Notes',
-                    width: MediaQuery.of(context).size.width - 10,
-                    lines: 3,
-                  ),
+                      CustomAutoCompleteWidget(
+                        width: MediaQuery.of(context).size.width / 1.1,
+                        selectedItem: selectedassignedpersonArr,
+                        labelText: 'Assigned For',
+                        labelField: (item) => item["name"],
+                        onChanged: (value) {
+                          setState(() {
+                            selectedassignedperson = value["name"];
+                            selectedassignedpersonId = value["value"];
+                            print(selectedassignedperson);
+                            print(selectedassignedpersonId);
+                            getassignedperson();
+                            assignedPerson = true;
+                          });
+                        },
+                        valArr: assignedList,
+                      ),
 
-                  SizedBox(
-                    height: 30.0,
-                  ),
+                      if (assignedperList != null && assignedPerson == true)
+                        CustomAutoCompleteWidget(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          selectedItem: selectedAssignedArr,
+                          labelText: 'Assigned Person',
+                          labelField: (item) => item.fullname,
+                          onChanged: (value) {
+                            selectedAssigned = value.fullname;
+                            selectedAssignedId = value.id;
+                            print(selectedAssignedId);
+                          },
+                          valArr: assignedperList,
+                        ),
 
-                   ButtonWidget(
+                      CustomeTextField(
+                        control: notesCtrl,
+                        validator: errValidateNotes(notesCtrl.text),
+                        labelText: 'Notes',
+                        width: MediaQuery.of(context).size.width - 10,
+                        lines: 3,
+                      ),
+
+                      SizedBox(
+                        height: 30.0,
+                      ),
+
+                      ButtonWidget(
                         title: 'Submit',
                         width: MediaQuery.of(context).size.width / 1.2,
-                        onTap: (){
+                        onTap: () {
                           saveEnquiry();
                         },
                         borderRadius: 12.0,
                         color: AppColors.blue,
                       ),
-                ]
-              )
-            )
-          )
-        )
-    );
+                    ])))));
   }
 }
