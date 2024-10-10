@@ -85,6 +85,8 @@ class _LoginPageState extends State<LoginPage> {
           final prefs = await SharedPreferences.getInstance();
           prefs.setBool('isLoggedin', true);
           prefs.setString('auth_token', response.authToken ?? '');
+          prefs.setString('role_name', response.roleName ?? '');
+          prefs.setInt('user_id', response.userId);
 
           //Navigator.pushNamed(context, '/');
           Navigator.push(

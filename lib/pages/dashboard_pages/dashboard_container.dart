@@ -24,13 +24,43 @@ class _DashboardContainerState extends State<DashboardContainer>
   int _selectedIndex = 0;
   bool navBack = false;
 
+  @override
+  initState() {
+    super.initState();
+    getLoginScreen();
+  }
+
+  String loginuser = "";
+  List<Widget> pageOptions = [];
+
+  // Future getLoginScreen() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   loginuser = prefs.getString('role_name' ?? '')!;
+  //   print("login user : $loginuser");
+
+  // }
+  Future<void> getLoginScreen() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      loginuser = prefs.getString('role_name') ?? '';
+
+      pageOptions = [
+        (loginuser == "Super Admin")
+            ? Dashboard_adminscreen()
+            : DashboardScreen(),
+        ServicePage(),
+        ChatPage(),
+      ];
+    });
+    print("login user : $loginuser");
+  }
+
   final List pageId = [1, 5, 8, 12, 15];
-  static List<Widget> pageOptions = <Widget>[
-    Dashboard_adminscreen(),
-    // DashboardScreen(),
-    ServicePage(),
-    ChatPage(),
-  ];
+  // static List<Widget> pageOptions = <Widget>[
+  //  (loginuser == "Super Admin") ? Dashboard_adminscreen():DashboardScreen(),
+  //   ServicePage(),
+  //   ChatPage(),
+  // ];
 
   void _onItemTapped(int index) async {
     if (index == 3) {
@@ -56,11 +86,6 @@ class _DashboardContainerState extends State<DashboardContainer>
         builder: (context) => MainContainer(childWidget: const LoginPage()),
       ),
     );
-  }
-
-  @override
-  initState() {
-    super.initState();
   }
 
   @protected

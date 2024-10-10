@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:keynes/pages/dashboard_pages/dashboard_container.dart';
 import 'package:keynes/pages/main_container.dart';
 import 'package:keynes/widgets/heading_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_colors.dart';
 import '../../models/service_list_model.dart';
@@ -49,7 +51,21 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
     print(widget.serviceName);
     getAllServices();
     getAllUsers();
+    getLoginScreen();
     super.initState();
+  }
+
+  String? loginuser;
+
+  Future getLoginScreen() async {
+    final prefs = await SharedPreferences.getInstance();
+    loginuser = prefs.getString('role_name' ?? '');
+    print("login user :$loginuser");
+
+    if (loginuser == "Sales Executive") {
+      selectedReferId = 2;
+      selectedUserId = prefs.getInt('user_id' ?? '');
+    }
   }
 
   selectedServicesArray() {
@@ -242,12 +258,24 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
       if (response.status.toString() == 'SUCCESS') {
         showInSnackBar(context, response.message.toString());
         // Navigator.pop(context, {'type': 1});
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MainContainer(childWidget: const ServicePage()),
-          ),
-        );
+        print("login user :  $loginuser");
+        if (loginuser == '' || loginuser == null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  MainContainer(childWidget: const ServicePage()),
+            ),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  DashboardContainer(childWidget: const ServicePage()),
+            ),
+          );
+        }
       } else {
         print(response.message.toString());
         showInSnackBar(context, response.message.toString());
@@ -326,27 +354,28 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
                           valArr: servicesList,
                         ),
 
-                      CustomAutoCompleteWidget(
-                        width: MediaQuery.of(context).size.width / 1.1,
-                        selectedItem: selectedReferArr,
-                        labelText: 'Refer Type',
-                        labelField: (item) => item["name"],
-                        onChanged: (value) {
-                          setState(() {
-                            selectedRefer = value["name"];
-                            selectedReferId = value["value"];
-                            print(selectedRefer);
-                            if (value["value"] == 4) {
-                              referPerson = true;
-                            } else {
-                              referPerson = false;
-                              selectedUser = "";
-                              selectedUserId = null;
-                            }
-                          });
-                        },
-                        valArr: referList,
-                      ),
+                      if (loginuser != "Sales Executive")
+                        CustomAutoCompleteWidget(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          selectedItem: selectedReferArr,
+                          labelText: 'Refer Type',
+                          labelField: (item) => item["name"],
+                          onChanged: (value) {
+                            setState(() {
+                              selectedRefer = value["name"];
+                              selectedReferId = value["value"];
+                              print(selectedRefer);
+                              if (value["value"] == 4) {
+                                referPerson = true;
+                              } else {
+                                referPerson = false;
+                                selectedUser = "";
+                                selectedUserId = null;
+                              }
+                            });
+                          },
+                          valArr: referList,
+                        ),
 
                       if (userList != null && referPerson == true)
                         CustomAutoCompleteWidget(
@@ -362,23 +391,24 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
                           valArr: userList,
                         ),
 
-                      CustomAutoCompleteWidget(
-                        width: MediaQuery.of(context).size.width / 1.1,
-                        selectedItem: selectedassignedpersonArr,
-                        labelText: 'Assigned For',
-                        labelField: (item) => item["name"],
-                        onChanged: (value) {
-                          setState(() {
-                            selectedassignedperson = value["name"];
-                            selectedassignedpersonId = value["value"];
-                            print(selectedassignedperson);
-                            print(selectedassignedpersonId);
-                            getassignedperson();
-                            assignedPerson = true;
-                          });
-                        },
-                        valArr: assignedList,
-                      ),
+                      if (loginuser == "Super Admin" && loginuser != '')
+                        CustomAutoCompleteWidget(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          selectedItem: selectedassignedpersonArr,
+                          labelText: 'Assigned For',
+                          labelField: (item) => item["name"],
+                          onChanged: (value) {
+                            setState(() {
+                              selectedassignedperson = value["name"];
+                              selectedassignedpersonId = value["value"];
+                              print(selectedassignedperson);
+                              print(selectedassignedpersonId);
+                              getassignedperson();
+                              assignedPerson = true;
+                            });
+                          },
+                          valArr: assignedList,
+                        ),
 
                       if (assignedperList != null && assignedPerson == true)
                         CustomAutoCompleteWidget(
