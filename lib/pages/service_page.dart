@@ -64,6 +64,7 @@ class _ServicePageState extends State<ServicePage> {
             color: Color(0xFF0151AF),
           ),
         ),
+        automaticallyImplyLeading: false,
       ),
       body: servicesList == null || servicesList!.isEmpty
           ? Center(child: CircularProgressIndicator()) // Loading indicator
