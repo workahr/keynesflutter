@@ -188,6 +188,7 @@ class _Dashboard_adminscreenState extends State<Dashboard_adminscreen> {
             },
           ),
         ],
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -517,7 +518,7 @@ class _Dashboard_adminscreenState extends State<Dashboard_adminscreen> {
                               '0',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 25,
+                                fontSize: 21,
                               ),
                             ),
                             SizedBox(height: 8),
@@ -577,7 +578,7 @@ class _Dashboard_adminscreenState extends State<Dashboard_adminscreen> {
                               '9582.20AED',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 25,
+                                fontSize: 21,
                               ),
                             ),
                             SizedBox(height: 8),

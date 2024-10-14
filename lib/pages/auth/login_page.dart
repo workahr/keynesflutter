@@ -89,7 +89,12 @@ class _LoginPageState extends State<LoginPage> {
           prefs.setInt('user_id', response.userId);
 
           //Navigator.pushNamed(context, '/');
-          Navigator.push(
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => DashboardContainer()),
+          // );
+
+            Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => DashboardContainer()),
           );

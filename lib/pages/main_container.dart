@@ -4,6 +4,7 @@ import 'package:keynes/pages/home/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/app_assets.dart';
+import 'dashboard_pages/dashboard_container.dart';
 import 'service_page.dart';
 
 class MainContainer extends StatefulWidget {
@@ -34,9 +35,29 @@ class _MainContainerState extends State<MainContainer>
     });
   }
 
-  @override
+   @override
   initState() {
     super.initState();
+    findLoginStatus();
+  }
+
+  bool? loginuser;
+
+  Future<void> findLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      loginuser = prefs.getBool('isLoggedin');
+      if(loginuser == true){
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => DashboardContainer()),
+          );
+
+      }
+
+   
+    });
+    print("login user : $loginuser");
   }
 
   @protected
