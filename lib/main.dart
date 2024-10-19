@@ -49,35 +49,35 @@ import 'services/firebase_services/firebase_api_services.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize OneSignal
-  await OneSignal.shared.setAppId(
-      "35b93f01-9c8e-4713-a836-b3a921c2fb36"); // Replace with your App ID
+//   // Initialize OneSignal
+//   await OneSignal.shared.setAppId(
+//       "35b93f01-9c8e-4713-a836-b3a921c2fb36"); // Replace with your App ID
 
-  // Optional: prompt for push notifications permission
-  OneSignal.shared.promptUserForPushNotificationPermission();
-
-  runApp(MyApp());
-}
-
-// Future<void> main() async {
-//    WidgetsFlutterBinding.ensureInitialized();
-
-// if(!kIsWeb){
-//   await Firebase.initializeApp();
-//   await FirebaseAPIServices().initNotifications();
-// }
-
-//   BaseController baseCtrl = Get.put(BaseController());
-
-//   String? token = baseCtrl.fbUserId;
-
-//   print("token $token");
+//   // Optional: prompt for push notifications permission
+//   OneSignal.shared.promptUserForPushNotificationPermission();
 
 //   runApp(MyApp());
 // }
+
+Future<void> main() async {
+   WidgetsFlutterBinding.ensureInitialized();
+
+if(!kIsWeb){
+  await Firebase.initializeApp();
+  await FirebaseAPIServices().initNotifications();
+}
+
+  BaseController baseCtrl = Get.put(BaseController());
+
+  String? token = baseCtrl.fbUserId;
+
+  print("token $token");
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget with WidgetsBindingObserver {
   const MyApp({Key? key}) : super(key: key);
