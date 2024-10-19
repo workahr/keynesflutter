@@ -17,7 +17,9 @@ import '../../widgets/custom_text_field.dart';
 import '../auth/auth_validations.dart';
 import '../service_page.dart';
 import 'assignperson_list_model.dart';
+import 'authority_list_model.dart';
 import 'enquiry_add_model.dart';
+import 'servicetype_list_model.dart';
 
 class AddEnquiryPage extends StatefulWidget {
   String? serviceName;
@@ -39,12 +41,14 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController emailAddressCtrl = TextEditingController();
   TextEditingController fullnameController = TextEditingController();
-  TextEditingController vehicleIdController = TextEditingController();
-  TextEditingController licenseNumberController = TextEditingController();
-  TextEditingController licenseExpiryDateController = TextEditingController();
   TextEditingController mobileNoCtrl = TextEditingController();
   TextEditingController notesCtrl = TextEditingController();
   TextEditingController addressCtrl = TextEditingController();
+  TextEditingController projectTitleCtrl = TextEditingController();
+  TextEditingController projectDescCtrl = TextEditingController();
+
+
+
 
   @override
   void initState() {
@@ -65,6 +69,14 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
     if (loginuser == "Sales Executive") {
       selectedReferId = 2;
       selectedUserId = prefs.getInt('user_id' ?? '');
+    }
+
+    if (loginuser == "Super Admin") {
+
+      getAllAuthority();
+      getAllServiceType();
+      getAllUsers1();
+
     }
   }
 
@@ -148,6 +160,68 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
     setState(() {});
   }
 
+ List<AuthorityListData>? authorityList = [];
+  List<AuthorityListData>? authorityListAll = [];
+
+    var selectedAuthorityArr;
+  String? selectedAuthority;
+  int? selectedAuthorityId;
+
+   Future getAllAuthority() async {
+     await apiService.getBearerToken();
+    var result = await apiService.getAllAuthority();
+    print('hi $result');
+    AuthorityListModel response = authorityListModelFromJson(result);
+    if (response.status.toString() == 'SUCCESS') {
+      setState(() {
+        authorityList = response.list;
+        authorityListAll = authorityList;
+        selectedServicesArray();
+        print('hello $authorityList');
+      });
+    } else {
+      setState(() {
+        authorityList = [];
+        authorityListAll = [];
+      });
+      showInSnackBar(context, response.status);
+    }
+    setState(() {});
+  }
+
+
+
+   List<ServiceTypeList>? serviceTypeList = [];
+  List<ServiceTypeList>? serviceTypeListAll = [];
+
+  var selectedServiceTypeArr;
+  String? selectedServiceType;
+  int? selectedServiceTypeId;
+
+   Future getAllServiceType() async {
+     await apiService.getBearerToken();
+    var result = await apiService.getAllServiceType();
+    print('hi $result');
+    ServicetypeListModel response = servicetypeListModelFromJson(result);
+    if (response.status.toString() == 'SUCCESS') {
+      setState(() {
+        serviceTypeList = response.list;
+        serviceTypeListAll = serviceTypeList;
+        selectedServicesArray();
+        print('hello $serviceTypeList');
+      });
+    } else {
+      setState(() {
+        serviceTypeList = [];
+        serviceTypeListAll = [];
+      });
+      showInSnackBar(context, response.status);
+    }
+    setState(() {});
+  }
+
+
+
   List<UserListData>? userList = [];
   List<UserListData>? userListAll = [];
 
@@ -169,6 +243,39 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
       setState(() {
         userList = [];
         userListAll = [];
+      });
+      showInSnackBar(context, response.status);
+    }
+    setState(() {});
+  }
+
+  List<UserListData>? clientList = [];
+  List<UserListData>? clientListAll = [];
+
+    var selectedClientArr;
+  String? selectedClient;
+  int? selectedClientId;
+
+  Future getAllUsers1() async {
+    var result = await apiService.getAllUsers();
+    print('hi $result');
+    UsersListModel response = usersListModelFromJson(result);
+    if (response.status.toString() == 'SUCCESS') {
+      setState(() {
+        clientList = response.list;
+        clientListAll = clientList;
+        print('hello $clientList');
+
+         clientList = clientListAll!.where((entry) {
+           
+            return entry.role == 1;
+       
+        }).toList();
+      });
+    } else {
+      setState(() {
+        clientList = [];
+        clientListAll = [];
       });
       showInSnackBar(context, response.status);
     }
@@ -205,7 +312,25 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
   errValidateusername(String? value) {
     return (value) {
       if (value.isEmpty) {
-        return 'User Name is required';
+        return 'Name is required';
+      }
+      return null;
+    };
+  }
+
+    errValidateProjectTitle(String? value) {
+    return (value) {
+      if (value.isEmpty) {
+        return 'Project Title is required';
+      }
+      return null;
+    };
+  }
+
+  errValidateProjectDesc(String? value) {
+    return (value) {
+      if (value.isEmpty) {
+        return 'Project Description is required';
       }
       return null;
     };
@@ -228,6 +353,16 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
       return null;
     };
   }
+  errValidateMobile(String? value) {
+    return (value) {
+      if (value.isEmpty) {
+        return 'Mobile Number is required';
+      }
+      return null;
+    };
+  }
+
+  String authToken = "";
 
   Future saveEnquiry() async {
     if (enquiryForm.currentState!.validate()) {
@@ -237,7 +372,7 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
       // // Format the date to yyyy-MM-dd
       // String formattedDate = DateFormat('yyyy-MM-dd').format(parsedDate);
       Map<String, dynamic> postData = {
-        "client_name": userNameController.text,
+        "client_name": selectedClient != null || selectedClient != "" ? selectedClient.toString() : userNameController.text,
         "mobile": mobileNoCtrl.text,
         "email": emailAddressCtrl.text,
         "address": addressCtrl.text,
@@ -248,10 +383,24 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
         "assigned_person": selectedAssignedId,
         "service_id": selectedServiceId,
         "enquiry_status": "New",
+        "authority": selectedAuthorityId,
+        "service_type": selectedServiceTypeId,
+        "project_title": projectTitleCtrl.text,
+        "project_description": projectDescCtrl.text
       };
       print('postData $postData');
+      final prefs = await SharedPreferences.getInstance();
+      authToken = prefs.getString('auth_token') ?? "";
+      String apiUrl ="";
+      if(authToken == ""){
+        apiUrl = 'enquiries/create-enquirieswithouttoken';
+      }
+      else{
+        apiUrl = 'enquiries/create-enquiries';
+      }
+       
 
-      var result = await apiService.saveEnquiry(postData);
+      var result = await apiService.saveEnquiry(apiUrl,postData);
       print('result $result');
       EnquiryAddModel response = enquiryAddModelFromJson(result);
 
@@ -305,12 +454,29 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     key: enquiryForm,
                     child: Column(children: [
+
+                      if (loginuser == null)
                       CustomeTextField(
                         control: userNameController,
                         validator: errValidateusername(userNameController.text),
                         labelText: 'Name',
                         width: MediaQuery.of(context).size.width - 10,
                       ),
+
+                       if (clientList != null && loginuser == "Super Admin" && loginuser != '')
+                        CustomAutoCompleteWidget(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          selectedItem: selectedClientArr,
+                          labelText: 'Client',
+                          labelField: (item) => item.fullname,
+                          onChanged: (value) {
+                            setState(() {
+                             selectedClientId =  value.id;
+                             selectedClient = value.fullname;
+                            });
+                          },
+                          valArr: clientList,
+                        ),
                       //SizedBox(height: 16),
                       CustomeTextField(
                         control: emailAddressCtrl,
@@ -324,8 +490,7 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
                         labelText: 'Contact',
                         width: MediaQuery.of(context).size.width / 1.1,
                         control: mobileNoCtrl,
-                        validator: authValidation
-                            .errValidateMobileNo(mobileNoCtrl.text),
+                        validator: errValidateMobile(mobileNoCtrl.text),
                         type: const TextInputType.numberWithOptions(),
                         inputFormaters: [
                           FilteringTextInputFormatter.allow(
@@ -340,18 +505,65 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
                         width: MediaQuery.of(context).size.width - 10,
                       ),
 
+                        if (loginuser == "Super Admin" && loginuser != '')
+                        CustomeTextField(
+                        control: projectTitleCtrl,
+                        validator: errValidateProjectTitle(projectTitleCtrl.text),
+                        labelText: 'Project Title',
+                        width: MediaQuery.of(context).size.width - 10,
+                      ),
+
+                     if (loginuser == "Super Admin" && loginuser != '')
+                       CustomeTextField(
+                        control: projectDescCtrl,
+                        validator: errValidateProjectDesc(projectDescCtrl.text),
+                        labelText: 'Project Description',
+                        width: MediaQuery.of(context).size.width - 10,
+                        lines: 3,
+                      ),
+
+
+                         if (authorityList != null && loginuser == "Super Admin" && loginuser != '')
+                        CustomAutoCompleteWidget(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          selectedItem: selectedAuthorityArr,
+                          labelText: 'Authority',
+                          labelField: (item) => item.authorityName,
+                          onChanged: (value) {
+                            selectedAuthority = value.authorityName;
+                            selectedAuthorityId = value.id;
+                            print(selectedAuthorityId);
+                          },
+                          valArr: authorityList,
+                        ),
+
+
                       if (servicesList != null)
                         CustomAutoCompleteWidget(
                           width: MediaQuery.of(context).size.width / 1.1,
                           selectedItem: selectedServicesArr,
-                          labelText: 'Services',
+                          labelText: 'Department',
                           labelField: (item) => item.name,
                           onChanged: (value) {
                             selectedService = value.name;
                             selectedServiceId = value.id;
-                            print(selectedService);
+                            print(selectedServiceId);
                           },
                           valArr: servicesList,
+                        ),
+
+                        if (serviceTypeList != null && loginuser == "Super Admin" && loginuser != '' && [1, 2, 3, 4].contains(selectedServiceId)) 
+                        CustomAutoCompleteWidget(
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          selectedItem: selectedServiceTypeArr,
+                          labelText: 'Service Type',
+                          labelField: (item) => item.serviceName,
+                          onChanged: (value) {
+                            selectedServiceType = value.serviceName;
+                            selectedServiceTypeId = value.id;
+                            print(selectedServiceTypeId);
+                          },
+                          valArr: serviceTypeList,
                         ),
 
                       if (loginuser != "Sales Executive")
@@ -386,7 +598,7 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
                           onChanged: (value) {
                             selectedUser = value.fullname;
                             selectedUserId = value.id;
-                            print(selectedService);
+                            print(selectedUserId);
                           },
                           valArr: userList,
                         ),

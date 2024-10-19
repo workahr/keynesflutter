@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/app_assets.dart';
 import '../../constants/app_colors.dart';
 import '../../controllers/base_controller.dart';
+import '../../services/get_server_key.dart';
 import '../../services/keynes_api_service.dart';
 import '../../services/comFuncService.dart';
 import '../../../widgets/button_widget.dart';
@@ -72,6 +73,9 @@ class _LoginPageState extends State<LoginPage> {
 
   String? dropdownValue;
   Future login() async {
+    // GetServerKey getServerKey = GetServerKey();
+    // String accessToken = await getServerKey.getServerKeyToken();
+    // print('accessServerKey: $accessToken');
     try {
       if (loginForm.currentState!.validate()) {
         Map<String, dynamic> postData = {

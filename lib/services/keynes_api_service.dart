@@ -285,6 +285,47 @@ class KeynesApiService {
     }
   }
 
+
+   //get all Authority
+  Future getAllAuthority() async {
+    try {
+      final url =
+          Uri.parse('${liveApiPath}authority/getallauthority');
+      final response = await client.get(
+        url,
+        headers: headerData,
+      );
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return response;
+      }
+    } catch (e) {
+      return e;
+    }
+  }
+
+
+
+  //get all ServiceType
+  Future getAllServiceType() async {
+    try {
+      final url =
+          Uri.parse('${liveApiPath}servicetype/getallservicetype');
+      final response = await client.get(
+        url,
+        headers: headerData,
+      );
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return response;
+      }
+    } catch (e) {
+      return e;
+    }
+  }
+
   //get all Enquirys
   Future getAllEnquirys() async {
     try {
@@ -870,10 +911,11 @@ class KeynesApiService {
   }
 
   // Save Enquiry
-  Future saveEnquiry(postData) async {
+  Future saveEnquiry(apiUrl,postData) async {
     try {
-      final url =
-          Uri.parse('${liveApiPath}enquiries/create-enquirieswithouttoken');
+      // final url =
+      //     Uri.parse('${liveApiPath}enquiries/create-enquirieswithouttoken');
+       final url = Uri.parse(liveApiPath + apiUrl);
       final response = await client.post(
         url,
         headers: headerData,

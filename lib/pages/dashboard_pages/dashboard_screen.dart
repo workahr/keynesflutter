@@ -209,6 +209,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             },
           ),
         ],
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Padding(

@@ -38,8 +38,8 @@ class UsersListModel {
 
 class UserListData {
     int id;
-    String username;
-    String password;
+    String? username;
+    String? password;
     String fullname;
     String email;
     String mobile;
@@ -56,8 +56,8 @@ class UserListData {
 
     UserListData({
         required this.id,
-        required this.username,
-        required this.password,
+         this.username,
+         this.password,
         required this.fullname,
         required this.email,
         required this.mobile,
