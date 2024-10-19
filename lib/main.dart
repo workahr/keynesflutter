@@ -1,6 +1,37 @@
+// import 'package:flutter/material.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
+
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+
+//   // Initialize OneSignal
+//   await OneSignal.shared.setAppId(
+//       "35b93f01-9c8e-4713-a836-b3a921c2fb36"); // Replace with your App ID
+
+//   // Optional: prompt for push notifications permission
+//   OneSignal.shared.promptUserForPushNotificationPermission();
+
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text("OneSignal Demo"),
+//         ),
+//         body: Center(
+//           child: Text("Welcome to OneSignal in Flutter!"),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 import 'dart:async';
 import 'dart:convert';
-
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -10,7 +41,7 @@ import 'package:keynes/pages/main_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controllers/base_controller.dart';
-
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter/material.dart';
 import 'constants/app_localizations.dart';
 import 'constants/constants.dart';
@@ -18,22 +49,35 @@ import 'services/firebase_services/firebase_api_services.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-Future<void> main() async {
-   WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-if(!kIsWeb){
-  await Firebase.initializeApp();
-  await FirebaseAPIServices().initNotifications();
-}
+  // Initialize OneSignal
+  await OneSignal.shared.setAppId(
+      "35b93f01-9c8e-4713-a836-b3a921c2fb36"); // Replace with your App ID
 
-  BaseController baseCtrl = Get.put(BaseController());
-
-  String? token = baseCtrl.fbUserId;
-  
-  print("token $token");
+  // Optional: prompt for push notifications permission
+  OneSignal.shared.promptUserForPushNotificationPermission();
 
   runApp(MyApp());
 }
+
+// Future<void> main() async {
+//    WidgetsFlutterBinding.ensureInitialized();
+
+// if(!kIsWeb){
+//   await Firebase.initializeApp();
+//   await FirebaseAPIServices().initNotifications();
+// }
+
+//   BaseController baseCtrl = Get.put(BaseController());
+
+//   String? token = baseCtrl.fbUserId;
+
+//   print("token $token");
+
+//   runApp(MyApp());
+// }
 
 class MyApp extends StatefulWidget with WidgetsBindingObserver {
   const MyApp({Key? key}) : super(key: key);
