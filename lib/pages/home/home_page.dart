@@ -6,12 +6,14 @@ import 'package:keynes/widgets/sub_heading_widget.dart';
 import '../../constants/app_assets.dart';
 
 class HomeScreen extends StatefulWidget {
+  String? displayTitle;
+
+  HomeScreen({super.key, this.displayTitle});
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Color(0xFF01519D),
                   ),
                 )),
-           const Padding(
+            const Padding(
               padding: EdgeInsets.all(16.0),
               child: Text(
                 'We Are Leading Company In Dubai, UAE',
@@ -70,16 +72,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
-              Padding(
+            Padding(
               padding: const EdgeInsets.all(16.0),
-             child: SubHeadingWidget(
-               title:  'KEYNES GROUP is growing rapidly into UAE`s leading company in delivering exceptional service. As the industry moves forward, so does our company. Our journey from a construction company to a conglomerate comprising of contracting and service industries has been filled with its fair share of trials. However, we can honestly say that today, our employees are richer in experience than their counterparts.',
+              child: SubHeadingWidget(
+                title:
+                    'KEYNES GROUP is growing rapidly into UAE`s leading company in delivering exceptional service. As the industry moves forward, so does our company. Our journey from a construction company to a conglomerate comprising of contracting and service industries has been filled with its fair share of trials. However, we can honestly say that today, our employees are richer in experience than their counterparts.',
                 fontSize: 14.0,
                 textAlign: TextAlign.center,
                 color: AppColors.dark,
               ),
-             ),
-            
+            ),
             const SizedBox(height: 20),
             Container(
                 //height: 100,
@@ -221,7 +223,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SubHeadingWidget(
-                title: 'We KEYNES steadfast focus is on providing an outstanding service to our customers. We value the mix of strengths, insights this approach brings, and we are proud to have built a team with a diversity of perspectives and background. Our priorities, commitments will always remain the same: to deliver a high quality service, to manage all aspects of the development process and to ensure that all of our clients receive the right product on time and to expectations.',
+                title:
+                    'We KEYNES steadfast focus is on providing an outstanding service to our customers. We value the mix of strengths, insights this approach brings, and we are proud to have built a team with a diversity of perspectives and background. Our priorities, commitments will always remain the same: to deliver a high quality service, to manage all aspects of the development process and to ensure that all of our clients receive the right product on time and to expectations.',
                 textAlign: TextAlign.center,
                 color: AppColors.dark,
                 fontSize: 14.0,

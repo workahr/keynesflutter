@@ -121,8 +121,6 @@ class FirebaseAPIServices {
     initLocalNotifications();
   }
 
-
-
 // Future<void> sendNotification(String fcmToken, String title, String body) async {
 //   final response = await http.post(
 //     Uri.parse('https://fcm.googleapis.com/fcm/send'),
@@ -153,5 +151,4 @@ class FirebaseAPIServices {
 //     print('Failed to send notification. Error: ${response.reasonPhrase}');
 //   }
 // }
-
 }

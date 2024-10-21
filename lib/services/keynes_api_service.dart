@@ -285,12 +285,10 @@ class KeynesApiService {
     }
   }
 
-
-   //get all Authority
+  //get all Authority
   Future getAllAuthority() async {
     try {
-      final url =
-          Uri.parse('${liveApiPath}authority/getallauthority');
+      final url = Uri.parse('${liveApiPath}authority/getallauthority');
       final response = await client.get(
         url,
         headers: headerData,
@@ -305,13 +303,31 @@ class KeynesApiService {
     }
   }
 
+  //get all User Mobile Id
 
+  Future getUserMobileId(apiUrl, postData) async {
+    try {
+      final url = Uri.parse(liveApiPath + apiUrl);
+      final response = await client.post(
+        url,
+        headers: headerData,
+        body: jsonEncode(postData),
+      );
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return response;
+      }
+    } catch (e) {
+      print('error $e');
+      handleError();
+    }
+  }
 
   //get all ServiceType
   Future getAllServiceType() async {
     try {
-      final url =
-          Uri.parse('${liveApiPath}servicetype/getallservicetype');
+      final url = Uri.parse('${liveApiPath}servicetype/getallservicetype');
       final response = await client.get(
         url,
         headers: headerData,
@@ -911,11 +927,11 @@ class KeynesApiService {
   }
 
   // Save Enquiry
-  Future saveEnquiry(apiUrl,postData) async {
+  Future saveEnquiry(apiUrl, postData) async {
     try {
       // final url =
       //     Uri.parse('${liveApiPath}enquiries/create-enquirieswithouttoken');
-       final url = Uri.parse(liveApiPath + apiUrl);
+      final url = Uri.parse(liveApiPath + apiUrl);
       final response = await client.post(
         url,
         headers: headerData,

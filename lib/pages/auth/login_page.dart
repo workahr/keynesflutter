@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -22,6 +24,7 @@ import '../dashboard_pages/dashboard_container.dart';
 import '../dashboard_pages/dashboard_screen.dart';
 import 'auth_validations.dart';
 import 'login_model.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -76,6 +79,8 @@ class _LoginPageState extends State<LoginPage> {
     // GetServerKey getServerKey = GetServerKey();
     // String accessToken = await getServerKey.getServerKeyToken();
     // print('accessServerKey: $accessToken');
+    print("baseCtrl.fbUserId${baseCtrl.fbUserId}");
+    print("baseCtrl.fbUserId");
     try {
       if (loginForm.currentState!.validate()) {
         Map<String, dynamic> postData = {
@@ -98,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
           //   MaterialPageRoute(builder: (context) => DashboardContainer()),
           // );
 
-            Navigator.pushReplacement(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => DashboardContainer()),
           );
@@ -114,7 +119,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   List<DropdownMenuItem<String>> items = [
-    // Dynamic items for dropdown
     DropdownMenuItem(
       value: 'suntech_dev_team',
       child: Text('suntech_dev_team'),

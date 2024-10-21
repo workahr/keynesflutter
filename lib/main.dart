@@ -1,35 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:onesignal_flutter/onesignal_flutter.dart';
-
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-
-//   // Initialize OneSignal
-//   await OneSignal.shared.setAppId(
-//       "35b93f01-9c8e-4713-a836-b3a921c2fb36"); // Replace with your App ID
-
-//   // Optional: prompt for push notifications permission
-//   OneSignal.shared.promptUserForPushNotificationPermission();
-
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: Text("OneSignal Demo"),
-//         ),
-//         body: Center(
-//           child: Text("Welcome to OneSignal in Flutter!"),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'dart:async';
 import 'dart:convert';
 
@@ -49,35 +17,69 @@ import 'services/firebase_services/firebase_api_services.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-
-//   // Initialize OneSignal
-//   await OneSignal.shared.setAppId(
-//       "35b93f01-9c8e-4713-a836-b3a921c2fb36"); // Replace with your App ID
-
-//   // Optional: prompt for push notifications permission
-//   OneSignal.shared.promptUserForPushNotificationPermission();
-
-//   runApp(MyApp());
-// }
-
-Future<void> main() async {
-   WidgetsFlutterBinding.ensureInitialized();
-
-if(!kIsWeb){
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+// Initialize Firebase
   await Firebase.initializeApp();
-  await FirebaseAPIServices().initNotifications();
-}
+  print("Firebase Initialized");
 
-  BaseController baseCtrl = Get.put(BaseController());
+  // Initialize OneSignal
+  await OneSignal.shared.setAppId("35b93f01-9c8e-4713-a836-b3a921c2fb36");
+  print("OneSignal Initialized");
 
-  String? token = baseCtrl.fbUserId;
+  // Set OneSignal logging level
+  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-  print("token $token");
+  bool permissionGranted =
+      await OneSignal.shared.promptUserForPushNotificationPermission();
+  print("Permission accepted: $permissionGranted");
+
+  await Future.delayed(Duration(seconds: 3));
+
+  OneSignal.shared.getDeviceState().then((deviceState) {
+    if (deviceState != null) {
+      var playerId = deviceState.userId;
+      var pushToken = deviceState.pushToken;
+      var hasNotificationPermission = deviceState.hasNotificationPermission;
+      //var isPushDisabled = deviceState.isPushDisabled;
+
+      BaseController baseCtrl = Get.put(BaseController());
+      baseCtrl.fbUserId = playerId;
+      print("fbUserId: ${baseCtrl.fbUserId}");
+      print("Player ID: $playerId");
+      print("Push Token: $pushToken");
+      print("Notification Permission: $hasNotificationPermission");
+      //print("Push Disabled: $isPushDisabled");
+
+      if (playerId != null) {
+        print("Successfully retrieved Player ID: $playerId");
+      } else {
+        print("Failed to retrieve Player ID.");
+      }
+    } else {
+      print("Device state is null.");
+    }
+  });
 
   runApp(MyApp());
 }
+
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+
+//   if (!kIsWeb) {
+//     await Firebase.initializeApp();
+//     await FirebaseAPIServices().initNotifications();
+//   }
+
+//   BaseController baseCtrl = Get.put(BaseController());
+
+//   String? token = baseCtrl.fbUserId;
+
+//   print("token $token");
+
+//   runApp(MyApp());
+// }
 
 class MyApp extends StatefulWidget with WidgetsBindingObserver {
   const MyApp({Key? key}) : super(key: key);
@@ -103,6 +105,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
+  usermobileid() {
+    setState(() {
+      main();
+    });
+  }
+
   bool isDarkModeEnabled = false;
   var position;
 
@@ -120,6 +128,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     super.initState();
+    usermobileid();
   }
 
   bool isDebugMode() {
