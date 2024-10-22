@@ -400,7 +400,8 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
 
         if (loginuser == "Super Admin") {
           print("admin tset");
-          getUserMobileId(selectedAssignedId!);
+          getUserMobileId(
+              selectedAssignedId!, selectedClient!, mobileNoCtrl.text);
         }
 
         if (loginuser == '' || loginuser == null) {
@@ -431,7 +432,7 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
 
   List<String>? mobileid;
 
-  Future getUserMobileId(int id) async {
+  Future getUserMobileId(int id, String clientName, String mobileNo) async {
     Map<String, dynamic> postData = {"id": id};
 
     print('postData $postData');
@@ -447,14 +448,15 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
       mobileid = response.mobileId;
       print(response.mobileId);
       print("mobile id test");
-      await sendNotification(mobileid!);
+      await sendNotification(mobileid!, clientName, mobileNo);
     } else {
       print(response.message.toString());
       showInSnackBar(context, response.message.toString());
     }
   }
 
-  Future<void> sendNotification(List<String> playerIds) async {
+  Future<void> sendNotification(
+      List<String> playerIds, String clientName, String mobileNo) async {
     var headerData = {
       "Content-Type": "application/json; charset=utf-8",
       "Authorization": "N2JiZDk1YWMtYjhlNi00NDRjLWI5MTAtNzUyMmVjOWNjMTBj",
@@ -465,11 +467,11 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
       "app_id": "35b93f01-9c8e-4713-a836-b3a921c2fb36",
       "include_player_ids": playerIds,
       "headings": {"en": "New Enquiry Added"},
-      //"contents": {"en": "Client: $clientName, Mobile: $mobileNo"},
-      "contents": {
-        "en":
-            "A new enquiry has been added. Client: John Doe, Mobile: +123456789"
-      },
+      "contents": {"en": "Client: $clientName, Mobile: $mobileNo"},
+      // "contents": {
+      //   "en":
+      //       "A new enquiry has been added. Client: John Doe, Mobile: +123456789"
+      // },
     };
 
     final url = Uri.parse('https://onesignal.com/api/v1/notifications');

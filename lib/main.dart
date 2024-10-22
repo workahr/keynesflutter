@@ -19,47 +19,50 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-// Initialize Firebase
   await Firebase.initializeApp();
-  print("Firebase Initialized");
 
   // Initialize OneSignal
   await OneSignal.shared.setAppId("35b93f01-9c8e-4713-a836-b3a921c2fb36");
-  print("OneSignal Initialized");
-
-  // Set OneSignal logging level
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
+  // Prompt user for notification permission
   bool permissionGranted =
       await OneSignal.shared.promptUserForPushNotificationPermission();
   print("Permission accepted: $permissionGranted");
 
-  await Future.delayed(Duration(seconds: 3));
+  OneSignal.shared.setNotificationWillShowInForegroundHandler(
+    (OSNotificationReceivedEvent event) {
+      print('Notification received: ${event.notification.title}');
+      event.complete(event.notification);
+    },
+  );
 
-  OneSignal.shared.getDeviceState().then((deviceState) {
-    if (deviceState != null) {
-      var playerId = deviceState.userId;
-      var pushToken = deviceState.pushToken;
-      var hasNotificationPermission = deviceState.hasNotificationPermission;
-      //var isPushDisabled = deviceState.isPushDisabled;
+  OneSignal.shared.setNotificationOpenedHandler(
+    (OSNotificationOpenedResult result) {
+      print('Opened notification: ${result.notification.title}');
+    },
+  );
 
-      BaseController baseCtrl = Get.put(BaseController());
+  // Initialize the BaseController
+  BaseController baseCtrl = Get.put(BaseController());
+
+  // Function to fetch the player ID with retry logic
+  Future<void> fetchPlayerId() async {
+    var deviceState = await OneSignal.shared.getDeviceState();
+    var playerId = deviceState?.userId;
+
+    if (playerId != null) {
       baseCtrl.fbUserId = playerId;
-      print("fbUserId: ${baseCtrl.fbUserId}");
-      print("Player ID: $playerId");
-      print("Push Token: $pushToken");
-      print("Notification Permission: $hasNotificationPermission");
-      //print("Push Disabled: $isPushDisabled");
-
-      if (playerId != null) {
-        print("Successfully retrieved Player ID: $playerId");
-      } else {
-        print("Failed to retrieve Player ID.");
-      }
+      print("Player ID retrieved: $playerId");
     } else {
-      print("Device state is null.");
+      print("Player ID not retrieved, retrying in 2 seconds...");
+      await Future.delayed(Duration(seconds: 2));
+      fetchPlayerId(); // Retry fetching player ID
     }
-  });
+  }
+
+  // Start fetching the player ID
+  fetchPlayerId();
 
   runApp(MyApp());
 }

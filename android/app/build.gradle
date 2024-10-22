@@ -51,7 +51,7 @@ android {
 
     buildTypes {
         release {
-             minifyEnabled true
+            minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // TODO: Add your own signing config for the release build.
