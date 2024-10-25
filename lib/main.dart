@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:keynes/pages/main_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'controllers/base_controller.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter/material.dart';

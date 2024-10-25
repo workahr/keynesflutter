@@ -23,11 +23,12 @@ class AuthValidation {
       return null;
     };
   }
+
   errValidateEmail(String value) {
     return (value) {
       if (value.isEmpty) {
         return 'Email address is required';
-      } 
+      }
       return null;
     };
   }

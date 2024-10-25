@@ -30,7 +30,8 @@ if (flutterVersionName == null) {
 
 android {
     namespace = "com.example.keynes"
-    compileSdk = flutter.compileSdkVersion
+   // compileSdk = flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -44,7 +45,8 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        //targetSdk = flutter.targetSdkVersion
+        targetSdkVersion 34
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
     }
@@ -66,8 +68,12 @@ flutter {
 }
 
 dependencies {
-  // Import the Firebase BoM
-  implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
+    implementation 'androidx.appcompat:appcompat:1.6.1'  // Ensure you have AppCompat dependency
+    implementation 'com.google.android.material:material:1.10.0'  // Ensure Material Components library is added
+    implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
 
   implementation("com.google.firebase:firebase-analytics")
 }
+
+
+  

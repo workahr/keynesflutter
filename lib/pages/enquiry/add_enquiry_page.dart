@@ -398,10 +398,15 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
       if (response.status.toString() == 'SUCCESS') {
         showInSnackBar(context, response.message.toString());
 
+        // if (loginuser == "Super Admin") {
+        //   print("admin tset");
+        //   getUserMobileId(
+        //       selectedAssignedId!, selectedClient!, mobileNoCtrl.text);
+        // }
+
         if (loginuser == "Super Admin") {
           print("admin tset");
-          getUserMobileId(
-              selectedAssignedId!, selectedClient!, mobileNoCtrl.text);
+          getUserMobileId(selectedAssignedId!);
         }
 
         if (loginuser == '' || loginuser == null) {
@@ -430,14 +435,12 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
     }
   }
 
-  List<String>? mobileid;
-
-  Future getUserMobileId(int id, String clientName, String mobileNo) async {
+  Future getUserMobileId(int id) async {
     Map<String, dynamic> postData = {"id": id};
 
     print('postData $postData');
 
-    String apiUrl = 'users/get-mobilenotificationid';
+    String apiUrl = 'users/get-mobilenotificationonesignal';
 
     var result = await apiService.getUserMobileId(apiUrl, postData);
     print('result $result');
@@ -445,49 +448,68 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
     Getuseridmodel response = getuseridmodelFromJson(result);
 
     if (response.status.toString() == 'SUCCESS') {
-      mobileid = response.mobileId;
-      print(response.mobileId);
-      print("mobile id test");
-      await sendNotification(mobileid!, clientName, mobileNo);
     } else {
       print(response.message.toString());
       showInSnackBar(context, response.message.toString());
     }
   }
 
-  Future<void> sendNotification(
-      List<String> playerIds, String clientName, String mobileNo) async {
-    var headerData = {
-      "Content-Type": "application/json; charset=utf-8",
-      "Authorization": "N2JiZDk1YWMtYjhlNi00NDRjLWI5MTAtNzUyMmVjOWNjMTBj",
-    };
-    print("mobile id test$playerIds");
-    print("mobile id test1");
-    var notificationData = {
-      "app_id": "35b93f01-9c8e-4713-a836-b3a921c2fb36",
-      "include_player_ids": playerIds,
-      "headings": {"en": "New Enquiry Added"},
-      "contents": {"en": "Client: $clientName, Mobile: $mobileNo"},
-      // "contents": {
-      //   "en":
-      //       "A new enquiry has been added. Client: John Doe, Mobile: +123456789"
-      // },
-    };
+  //   One Signal send notification
 
-    final url = Uri.parse('https://onesignal.com/api/v1/notifications');
+//  var mobileid;
 
-    var response = await http.post(
-      url,
-      headers: headerData,
-      body: jsonEncode(notificationData),
-    );
+//   Future getUserMobileId(int id, String clientName, String mobileNo) async {
+//     Map<String, dynamic> postData = {"id": id};
 
-    if (response.statusCode == 200) {
-      print("Notification Sent Successfully");
-    } else {
-      print("Error Sending Notification: ${response.body}");
-    }
-  }
+//     print('postData $postData');
+
+//     String apiUrl = 'users/get-mobilenotificationid';
+
+//     var result = await apiService.getUserMobileId(apiUrl, postData);
+//     print('result $result');
+
+//     Getuseridmodel response = getuseridmodelFromJson(result);
+
+//     if (response.status.toString() == 'SUCCESS') {
+//       mobileid = response.mobileId;
+//       print(response.mobileId);
+//       print("mobile id test");
+//       await sendNotification(mobileid!, clientName, mobileNo);
+//     } else {
+//       print(response.message.toString());
+//       showInSnackBar(context, response.message.toString());
+//     }
+//   }
+
+//   Future<void> sendNotification(
+//       List<String> playerIds, String clientName, String mobileNo) async {
+//     var headerData = {
+//       "Content-Type": "application/json; charset=utf-8",
+//       "Authorization": "N2JiZDk1YWMtYjhlNi00NDRjLWI5MTAtNzUyMmVjOWNjMTBj",
+//     };
+//     print("mobile id test$playerIds");
+//     print("mobile id test1");
+//     var notificationData = {
+//       "app_id": "35b93f01-9c8e-4713-a836-b3a921c2fb36",
+//       "include_player_ids": playerIds,
+//       "headings": {"en": "New Enquiry Added"},
+//       "contents": {"en": "Client: $clientName, Mobile: $mobileNo"},
+//     };
+
+//     final url = Uri.parse('https://onesignal.com/api/v1/notifications');
+
+//     var response = await http.post(
+//       url,
+//       headers: headerData,
+//       body: jsonEncode(notificationData),
+//     );
+
+//     if (response.statusCode == 200) {
+//       print("Notification Sent Successfully");
+//     } else {
+//       print("Error Sending Notification: ${response.body}");
+//     }
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -722,13 +744,6 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
                     ])))));
   }
 }
-
-
-
-
-
-
-
 
 ///     With Out One Signal
 
@@ -1131,7 +1146,6 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
 //       if (response.status.toString() == 'SUCCESS') {
 //         showInSnackBar(context, response.message.toString());
 
-
 //         // Navigator.pop(context, {'type': 1});
 //         print("login user :  $loginuser");
 //         if (loginuser == '' || loginuser == null) {
@@ -1393,9 +1407,6 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
 //                     ])))));
 //   }
 // }
-
-
-
 
 // // import 'package:flutter/material.dart';
 // // import 'package:flutter/services.dart';

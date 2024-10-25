@@ -39,6 +39,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<DasEnquiryListData>? dasenquiryListAll = [];
 
   Future getAllEnquirys() async {
+    await apiService.getBearerToken();
+
     var result = await apiService.getAllEnquirys();
     print('hi $result');
     EnquiryListModel response = enquiryListModelFromJson(result);
