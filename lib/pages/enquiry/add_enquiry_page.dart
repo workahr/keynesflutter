@@ -48,6 +48,9 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
   TextEditingController mobileNoCtrl = TextEditingController();
   TextEditingController notesCtrl = TextEditingController();
   TextEditingController addressCtrl = TextEditingController();
+  TextEditingController ownernameCtrl = TextEditingController();
+  TextEditingController ownernumberCtrl = TextEditingController();
+  TextEditingController owneremailCtrl = TextEditingController();
   TextEditingController projectTitleCtrl = TextEditingController();
   TextEditingController projectDescCtrl = TextEditingController();
 
@@ -261,9 +264,14 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
         clientListAll = clientList;
         print('hello $clientList');
 
+        // print(clientList!.type);
         clientList = clientListAll!.where((entry) {
           return entry.role == 1;
         }).toList();
+
+        //  clientList = clientListAll!.where((entry) {
+        //   return entry.type == "C";
+        // }).toList();
       });
     } else {
       setState(() {
@@ -347,6 +355,33 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
     };
   }
 
+  errValidateownername(String? value) {
+    return (value) {
+      if (value.isEmpty) {
+        return 'Owner Name is required';
+      }
+      return null;
+    };
+  }
+
+  errValidateownernumber(String? value) {
+    return (value) {
+      if (value.isEmpty) {
+        return 'Owner Number is required';
+      }
+      return null;
+    };
+  }
+
+  errValidateowneremail(String? value) {
+    return (value) {
+      if (value.isEmpty) {
+        return 'Owner Email is required';
+      }
+      return null;
+    };
+  }
+
   errValidateMobile(String? value) {
     return (value) {
       if (value.isEmpty) {
@@ -357,6 +392,7 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
   }
 
   String authToken = "";
+  String selectedclientType = '';
 
   Future saveEnquiry() async {
     if (enquiryForm.currentState!.validate()) {
@@ -377,7 +413,10 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
         "authority": selectedAuthorityId,
         "service_type": selectedServiceTypeId,
         "project_title": projectTitleCtrl.text,
-        "project_description": projectDescCtrl.text
+        "project_description": projectDescCtrl.text,
+        "owner_name": ownernameCtrl.text,
+        "owner_number": ownernumberCtrl.text,
+        "owner_email": owneremailCtrl.text
       };
 
       print('postData $postData');
@@ -531,7 +570,7 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     key: enquiryForm,
                     child: Column(children: [
-                      if (loginuser == null)
+                      if (loginuser == null || loginuser == "Sales Executive")
                         CustomeTextField(
                           control: userNameController,
                           validator:
@@ -550,32 +589,40 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
                           labelField: (item) => item.fullname,
                           onChanged: (value) {
                             setState(() {
+                              selectedclientType = "";
                               selectedClientId = value.id;
                               selectedClient = value.fullname;
+                              if (value.type != null) {
+                                selectedclientType = value.type;
+                                print(
+                                    "selectedclientType   : $selectedclientType");
+                              }
                             });
                           },
                           valArr: clientList,
                         ),
                       //SizedBox(height: 16),
-                      CustomeTextField(
-                        control: emailAddressCtrl,
-                        validator: authValidation
-                            .errValidateEmail(emailAddressCtrl.text),
-                        labelText: 'Email',
-                        width: MediaQuery.of(context).size.width - 10,
-                      ),
+                      if (loginuser != "Super Admin" && loginuser != '')
+                        CustomeTextField(
+                          control: emailAddressCtrl,
+                          validator: authValidation
+                              .errValidateEmail(emailAddressCtrl.text),
+                          labelText: 'Email',
+                          width: MediaQuery.of(context).size.width - 10,
+                        ),
 
-                      CustomeTextField(
-                        labelText: 'Contact',
-                        width: MediaQuery.of(context).size.width / 1.1,
-                        control: mobileNoCtrl,
-                        validator: errValidateMobile(mobileNoCtrl.text),
-                        type: const TextInputType.numberWithOptions(),
-                        inputFormaters: [
-                          FilteringTextInputFormatter.allow(
-                              RegExp(r'^-?(\d+)?\.?\d{0,11}'))
-                        ],
-                      ),
+                      if (loginuser != "Super Admin" && loginuser != '')
+                        CustomeTextField(
+                          labelText: 'Contact',
+                          width: MediaQuery.of(context).size.width / 1.1,
+                          control: mobileNoCtrl,
+                          validator: errValidateMobile(mobileNoCtrl.text),
+                          type: const TextInputType.numberWithOptions(),
+                          inputFormaters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^-?(\d+)?\.?\d{0,11}'))
+                          ],
+                        ),
 
                       CustomeTextField(
                         control: addressCtrl,
@@ -718,6 +765,38 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
                             print(selectedAssignedId);
                           },
                           valArr: assignedperList,
+                        ),
+                      if (loginuser == "Super Admin" &&
+                          loginuser != '' &&
+                          selectedclientType == "Company" &&
+                          selectedclientType != null)
+                        CustomeTextField(
+                          control: ownernameCtrl,
+                          validator: errValidateownername(ownernameCtrl.text),
+                          labelText: 'Owner Name',
+                          width: MediaQuery.of(context).size.width - 10,
+                        ),
+                      if (loginuser == "Super Admin" &&
+                          loginuser != '' &&
+                          selectedclientType == "Company" &&
+                          selectedclientType != null)
+                        CustomeTextField(
+                          control: ownernumberCtrl,
+                          validator:
+                              errValidateownernumber(ownernumberCtrl.text),
+                          labelText: 'Owner Number',
+                          width: MediaQuery.of(context).size.width - 10,
+                        ),
+
+                      if (loginuser == "Super Admin" &&
+                          loginuser != '' &&
+                          selectedclientType == "Company" &&
+                          selectedclientType != null)
+                        CustomeTextField(
+                          control: owneremailCtrl,
+                          validator: errValidateowneremail(owneremailCtrl.text),
+                          labelText: 'Owner Email',
+                          width: MediaQuery.of(context).size.width - 10,
                         ),
 
                       CustomeTextField(
