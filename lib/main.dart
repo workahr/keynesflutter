@@ -15,72 +15,72 @@ import 'services/firebase_services/firebase_api_services.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp();
-
-//   // Initialize OneSignal
-//   await OneSignal.shared.setAppId("35b93f01-9c8e-4713-a836-b3a921c2fb36");
-//   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-
-//   // Prompt user for notification permission
-//   bool permissionGranted =
-//       await OneSignal.shared.promptUserForPushNotificationPermission();
-//   print("Permission accepted: $permissionGranted");
-
-//   OneSignal.shared.setNotificationWillShowInForegroundHandler(
-//     (OSNotificationReceivedEvent event) {
-//       print('Notification received: ${event.notification.title}');
-//       event.complete(event.notification);
-//     },
-//   );
-
-//   OneSignal.shared.setNotificationOpenedHandler(
-//     (OSNotificationOpenedResult result) {
-//       print('Opened notification: ${result.notification.title}');
-//     },
-//   );
-
-//   // Initialize the BaseController
-//   BaseController baseCtrl = Get.put(BaseController());
-
-//   // Function to fetch the player ID with retry logic
-//   Future<void> fetchPlayerId() async {
-//     var deviceState = await OneSignal.shared.getDeviceState();
-//     var playerId = deviceState?.userId;
-
-//     if (playerId != null) {
-//       baseCtrl.fbUserId = playerId;
-//       print("Player ID retrieved: $playerId");
-//     } else {
-//       print("Player ID not retrieved, retrying in 2 seconds...");
-//       await Future.delayed(Duration(seconds: 2));
-//       fetchPlayerId(); // Retry fetching player ID
-//     }
-//   }
-
-//   // Start fetching the player ID
-//   fetchPlayerId();
-
-//   runApp(MyApp());
-// }
-
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
-  if (!kIsWeb) {
-    await Firebase.initializeApp();
-    await FirebaseAPIServices().initNotifications();
-  }
+  // Initialize OneSignal
+  await OneSignal.shared.setAppId("35b93f01-9c8e-4713-a836-b3a921c2fb36");
+  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
+  // Prompt user for notification permission
+  bool permissionGranted =
+      await OneSignal.shared.promptUserForPushNotificationPermission();
+  print("Permission accepted: $permissionGranted");
+
+  OneSignal.shared.setNotificationWillShowInForegroundHandler(
+    (OSNotificationReceivedEvent event) {
+      print('Notification received: ${event.notification.title}');
+      event.complete(event.notification);
+    },
+  );
+
+  OneSignal.shared.setNotificationOpenedHandler(
+    (OSNotificationOpenedResult result) {
+      print('Opened notification: ${result.notification.title}');
+    },
+  );
+
+  // Initialize the BaseController
   BaseController baseCtrl = Get.put(BaseController());
 
-  String? token = baseCtrl.fbUserId;
+  // Function to fetch the player ID with retry logic
+  Future<void> fetchPlayerId() async {
+    var deviceState = await OneSignal.shared.getDeviceState();
+    var playerId = deviceState?.userId;
 
-  print("token $token");
+    if (playerId != null) {
+      baseCtrl.fbUserId = playerId;
+      print("Player ID retrieved: $playerId");
+    } else {
+      print("Player ID not retrieved, retrying in 2 seconds...");
+      await Future.delayed(Duration(seconds: 2));
+      fetchPlayerId(); // Retry fetching player ID
+    }
+  }
+
+  // Start fetching the player ID
+  fetchPlayerId();
 
   runApp(MyApp());
 }
+
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+
+//   if (!kIsWeb) {
+//     await Firebase.initializeApp();
+//     await FirebaseAPIServices().initNotifications();
+//   }
+
+//   BaseController baseCtrl = Get.put(BaseController());
+
+//   String? token = baseCtrl.fbUserId;
+
+//   print("token $token");
+
+//   runApp(MyApp());
+// }
 
 class MyApp extends StatefulWidget with WidgetsBindingObserver {
   const MyApp({Key? key}) : super(key: key);

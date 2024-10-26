@@ -57,15 +57,15 @@ class EnquiryListModel {
 class DasEnquiryListData {
   int id;
   int serviceId;
-  String clientName;
-  String mobile;
-  String email;
+  String? clientName;
+  String? mobile;
+  String? email;
   String? address;
-  String notes;
-  String referType;
+  String? notes;
+  String? referType;
   String? referPerson;
-  String enquiryStatus;
-  String serviceName;
+  String? enquiryStatus;
+  String? serviceName;
   int status;
   int createdBy;
   DateTime createdDate;
@@ -75,15 +75,15 @@ class DasEnquiryListData {
   DasEnquiryListData({
     required this.id,
     required this.serviceId,
-    required this.clientName,
-    required this.mobile,
-    required this.email,
+    this.clientName,
+    this.mobile,
+    this.email,
     this.address = '', // Default to an empty string
-    required this.notes,
-    required this.referType,
+    this.notes,
+    this.referType,
     this.referPerson = '', // Default to an empty string
-    required this.enquiryStatus,
-    required this.serviceName,
+    this.enquiryStatus,
+    this.serviceName,
     required this.status,
     required this.createdBy,
     required this.createdDate,

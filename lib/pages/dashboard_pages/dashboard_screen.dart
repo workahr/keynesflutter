@@ -154,7 +154,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
               ),
               Text(
-                service.serviceName,
+                service.serviceName.toString(),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 15),
@@ -740,7 +740,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              service.clientName,
+                                              service.clientName.toString(),
                                               // 'Tom Cruise',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold),
