@@ -64,7 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '361921610529',
     projectId: 'keynesflutter-222b3',
     storageBucket: 'keynesflutter-222b3.appspot.com',
-    iosBundleId: 'com.example.keynes',
+    iosBundleId: 'com.keynes.crm',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,7 +73,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '361921610529',
     projectId: 'keynesflutter-222b3',
     storageBucket: 'keynesflutter-222b3.appspot.com',
-    iosBundleId: 'com.example.keynes',
+    iosBundleId: 'com.keynes.crm',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
