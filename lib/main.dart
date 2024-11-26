@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:keynes/firebase_options.dart';
 import 'package:keynes/pages/main_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'controllers/base_controller.dart';
@@ -17,10 +18,14 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Initialize OneSignal
+  
   await OneSignal.shared.setAppId("35b93f01-9c8e-4713-a836-b3a921c2fb36");
+  OneSignal.shared
+      .promptUserForPushNotificationPermission()
+      .then((accepted) {});
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
   // Prompt user for notification permission
