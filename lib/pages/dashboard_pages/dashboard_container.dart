@@ -49,7 +49,7 @@ class _DashboardContainerState extends State<DashboardContainer>
             ? Dashboard_adminscreen()
             : DashboardScreen(),
         ServicePage(),
-        ChatPage(),
+       // ChatPage(),
       ];
     });
     print("login user : $loginuser");
@@ -152,10 +152,10 @@ class _DashboardContainerState extends State<DashboardContainer>
               //icon: Icon(Icons.book),
               label: 'Service',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
-              label: 'Chat',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.chat),
+            //   label: 'Chat',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.logout), // Correct logout icon
               label: 'Log Out',
