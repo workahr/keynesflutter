@@ -303,7 +303,7 @@ class _DashboardClientScreenState extends State<DashboardClientScreen> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Total Enquiry\'s',
+                              'Total Enquiries',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
@@ -353,7 +353,7 @@ class _DashboardClientScreenState extends State<DashboardClientScreen> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Today Enquiry\'s',
+                              'Today Enquiries',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
@@ -413,7 +413,7 @@ class _DashboardClientScreenState extends State<DashboardClientScreen> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              'Pending Enquiry\'s',
+                              'Pending Enquiries',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,

@@ -63,7 +63,7 @@ class _DashboardContainerState extends State<DashboardContainer>
   // ];
 
   void _onItemTapped(int index) async {
-    if (index == 3) {
+    if (index == 2) {
       // Handle logout
       await _handleLogout();
     } else {
