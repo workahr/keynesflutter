@@ -60,20 +60,20 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBCZhgpmL_G_6oc6y0PtAWiTUuGip1_wrU',
-    appId: '1:361921610529:ios:3215e0bc908f58a3aeb460',
+    appId: '1:361921610529:android:540f86980f1bf7e6aeb460',
     messagingSenderId: '361921610529',
     projectId: 'keynesflutter-222b3',
     storageBucket: 'keynesflutter-222b3.appspot.com',
-    iosBundleId: 'com.keynes.crm',
+    iosBundleId: 'com.rafsun.keynes',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyBCZhgpmL_G_6oc6y0PtAWiTUuGip1_wrU',
-    appId: '1:361921610529:ios:3215e0bc908f58a3aeb460',
+    appId: '1:361921610529:android:540f86980f1bf7e6aeb460',
     messagingSenderId: '361921610529',
     projectId: 'keynesflutter-222b3',
     storageBucket: 'keynesflutter-222b3.appspot.com',
-    iosBundleId: 'com.keynes.crm',
+    iosBundleId: 'com.rafsun.keynes',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(

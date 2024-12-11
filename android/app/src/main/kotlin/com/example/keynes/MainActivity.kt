@@ -1,4 +1,4 @@
-package com.keynes.crm
+package com.rafsun.keynes
 
 import io.flutter.embedding.android.FlutterActivity
 

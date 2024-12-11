@@ -2,17 +2,22 @@
   "project_info": {
     "project_number": "361921610529",
     "project_id": "keynesflutter-222b3",
-    "storage_bucket": "keynesflutter-222b3.appspot.com"
+    "storage_bucket": "keynesflutter-222b3.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:361921610529:android:abe499b9802b2d20aeb460",
         "android_client_info": {
-          "package_name": "com.keynes.crm"
+          "package_name": "com.example.keynes"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "361921610529-jbjb6etfbgtgv9bethcs5lms686bbt8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBslcuR9PFxxKhAOv8peuv8lv6lUI0Xaoo"
@@ -20,7 +25,41 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361921610529-jbjb6etfbgtgv9bethcs5lms686bbt8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361921610529:android:540f86980f1bf7e6aeb460",
+        "android_client_info": {
+          "package_name": "com.rafsun.keynes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361921610529-jbjb6etfbgtgv9bethcs5lms686bbt8i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBslcuR9PFxxKhAOv8peuv8lv6lUI0Xaoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "361921610529-jbjb6etfbgtgv9bethcs5lms686bbt8i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

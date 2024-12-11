@@ -425,10 +425,10 @@ class _AddEnquiryPageState extends State<AddEnquiryPage> {
       final prefs = await SharedPreferences.getInstance();
       authToken = prefs.getString('auth_token') ?? "";
 
-      String apiUrl = authToken == ""
-          ? 'enquiries/create-enquirieswithouttoken'
-          : 'enquiries/create-enquiries';
-
+      // String apiUrl = authToken == ""
+      //     ? 'enquiries/create-enquirieswithouttoken'
+      //     : 'enquiries/create-enquiries';
+      String apiUrl = "enquiries/create-enquirieswithouttoken";
       var result = await apiService.saveEnquiry(apiUrl, postData);
       print('result $result');
 

@@ -13,38 +13,40 @@ import 'package:flutter/material.dart';
 import 'constants/app_localizations.dart';
 import 'constants/constants.dart';
 import 'services/firebase_services/firebase_api_services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Initialize OneSignal
-  
-  await OneSignal.shared.setAppId("35b93f01-9c8e-4713-a836-b3a921c2fb36");
-  OneSignal.shared
-      .promptUserForPushNotificationPermission()
-      .then((accepted) {});
-  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  if (!kIsWeb) {
+    // await OneSignal.shared.setAppId("35b93f01-9c8e-4713-a836-b3a921c2fb36");
+    // OneSignal.shared
+    //     .promptUserForPushNotificationPermission()
+    //     .then((accepted) {});
+    // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-  // Prompt user for notification permission
-  bool permissionGranted =
-      await OneSignal.shared.promptUserForPushNotificationPermission();
-  print("Permission accepted: $permissionGranted");
+    // // Prompt user for notification permission
+    // bool permissionGranted =
+    //     await OneSignal.shared.promptUserForPushNotificationPermission();
+    // print("Permission accepted: $permissionGranted");
 
-  OneSignal.shared.setNotificationWillShowInForegroundHandler(
-    (OSNotificationReceivedEvent event) {
-      print('Notification received: ${event.notification.title}');
-      event.complete(event.notification);
-    },
-  );
+    // OneSignal.shared.setNotificationWillShowInForegroundHandler(
+    //   (OSNotificationReceivedEvent event) {
+    //     print('Notification received: ${event.notification.title}');
+    //     event.complete(event.notification);
+    //   },
+    // );
 
-  OneSignal.shared.setNotificationOpenedHandler(
-    (OSNotificationOpenedResult result) {
-      print('Opened notification: ${result.notification.title}');
-    },
-  );
+    // OneSignal.shared.setNotificationOpenedHandler(
+    //   (OSNotificationOpenedResult result) {
+    //     print('Opened notification: ${result.notification.title}');
+    //   },
+    // );
+  }
 
   // Initialize the BaseController
   BaseController baseCtrl = Get.put(BaseController());
@@ -65,8 +67,9 @@ void main() async {
   }
 
   // Start fetching the player ID
-  fetchPlayerId();
-
+  if (!kIsWeb) {
+    fetchPlayerId();
+  }
   runApp(MyApp());
 }
 
