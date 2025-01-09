@@ -66,6 +66,7 @@ class DasEnquiryListData {
   String? referPerson;
   String? enquiryStatus;
   String? serviceName;
+  String? project_status;
   int status;
   int createdBy;
   DateTime createdDate;
@@ -84,6 +85,7 @@ class DasEnquiryListData {
     this.referPerson = '', // Default to an empty string
     this.enquiryStatus,
     this.serviceName,
+    this.project_status,
     required this.status,
     required this.createdBy,
     required this.createdDate,
@@ -106,6 +108,7 @@ class DasEnquiryListData {
         referPerson: json["refer_person"],
         enquiryStatus: json["enquiry_status"],
         serviceName: json["service_name"],
+        project_status: json["project_status"],
         status: json["status"],
         createdBy: json["created_by"],
         createdDate: DateTime.parse(json["created_date"]),
@@ -127,6 +130,7 @@ class DasEnquiryListData {
         referType: 'Unknown',
         enquiryStatus: 'Unknown',
         serviceName: 'Unknown',
+        project_status: "",
         status: 0,
         createdBy: 0,
         createdDate: DateTime.now(),
@@ -147,6 +151,7 @@ class DasEnquiryListData {
         "refer_person": referPerson,
         "enquiry_status": enquiryStatus,
         "service_name": serviceName,
+        "project_status": project_status,
         "status": status,
         "created_by": createdBy,
         "created_date": createdDate.toIso8601String(),

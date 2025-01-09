@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:keynes/pages/dashboard_pages/enquiry_list_model.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/app_assets.dart';
@@ -37,10 +38,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   List<DasEnquiryListData>? dasenquiryList = [];
   List<DasEnquiryListData>? dasenquiryListAll = [];
+  bool isLoading = false;
 
   Future getAllEnquirys() async {
     await apiService.getBearerToken();
-
+    setState(() {
+      isLoading = true;
+    });
     var result = await apiService.getAllEnquirys();
     print('hi $result');
     EnquiryListModel response = enquiryListModelFromJson(result);
@@ -49,15 +53,40 @@ class _DashboardScreenState extends State<DashboardScreen> {
         dasenquiryList = response.list;
         dasenquiryListAll = dasenquiryList;
         print('hello $dasenquiryList');
+        isLoading = false;
       });
     } else {
       setState(() {
         dasenquiryList = [];
         dasenquiryListAll = [];
+        isLoading = false;
       });
-      showInSnackBar(context, response.status);
+      //  showInSnackBar(context, response.status);
     }
     setState(() {});
+  }
+
+  Widget _buildShimmerPlaceholder() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13), // Add border radius
+              child: Container(
+                width: double.infinity,
+                height: 183,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   void showenquiry(DasEnquiryListData service) {
@@ -100,7 +129,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             fontWeight: FontWeight.bold, color: Colors.grey),
                       ),
                       Text(
-                        service.mobile.toString(),
+                        service.mobile.toString() == "null"
+                            ? "-"
+                            : service.mobile.toString(),
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -121,7 +152,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             fontWeight: FontWeight.bold, color: Colors.grey),
                       ),
                       Text(
-                        service.email.toString(),
+                        service.email.toString() == "null"
+                            ? "-"
+                            : service.email.toString(),
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
@@ -141,7 +174,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         fontWeight: FontWeight.bold, color: Colors.grey),
                   ),
                   Text(
-                    service.address.toString(),
+                    service.address.toString() == "null"
+                        ? "-"
+                        : service.address.toString(),
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     softWrap: true,
                   ),
@@ -165,6 +200,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               Text(
                 service.notes.toString(),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 15),
+              Text(
+                'Project Status',
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+              ),
+              Text(
+                service.project_status.toString(),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
@@ -654,9 +699,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     color: Color(0xFF01519D)),
               ),
               SizedBox(height: 10),
-              dasenquiryList == null || dasenquiryList!.isEmpty
-                  ? Center(
-                      child: CircularProgressIndicator()) // Loading indicator
+              isLoading
+                  ? ListView.builder(
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return _buildShimmerPlaceholder();
+                      },
+                    )
                   : Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Column(
@@ -757,17 +806,52 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         ),
                                         SizedBox(height: 10),
 
-                                        // Service Type
-                                        Text(
-                                          'Service Type',
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
-                                        Text(
-                                          service.serviceName.toString(),
-                                          //'Approval, Construction, Interior',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                                        Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              // Service Type
+                                              Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Service Type',
+                                                      style: TextStyle(
+                                                          color: Colors.grey),
+                                                    ),
+                                                    Text(
+                                                      service.serviceName
+                                                          .toString(),
+                                                      //'Approval, Construction, Interior',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ]),
+                                              Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    Text(
+                                                      'Project Status',
+                                                      style: TextStyle(
+                                                          color: Colors.grey),
+                                                    ),
+                                                    Text(
+                                                      service.project_status
+                                                          .toString(),
+                                                      //'Approval, Construction, Interior',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ])
+                                            ])
                                       ],
                                     ),
                                   ),

@@ -55,7 +55,7 @@ class _DashboardClientScreenState extends State<DashboardClientScreen> {
         dasenquiryList = [];
         dasenquiryListAll = [];
       });
-      showInSnackBar(context, response.status);
+      //  showInSnackBar(context, response.status);
     }
     setState(() {});
   }
@@ -219,7 +219,6 @@ class _DashboardClientScreenState extends State<DashboardClientScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-          
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
