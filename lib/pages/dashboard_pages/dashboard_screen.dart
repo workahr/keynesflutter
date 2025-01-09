@@ -719,7 +719,211 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               borderRadius: BorderRadius.circular(
                                   10.0), // Matching the border radius of the card
                             ),
-                            child: Padding(
+                            child:
+                                // Padding(
+                                //   padding: const EdgeInsets.all(16.0),
+                                //   child: Row(
+                                //     children: [
+                                //       Expanded(
+                                //         child: Column(
+                                //           crossAxisAlignment:
+                                //               CrossAxisAlignment.start,
+                                //           children: [
+                                //             Row(
+                                //               mainAxisAlignment:
+                                //                   MainAxisAlignment.spaceBetween,
+                                //               children: [
+                                //                 Container(
+                                //                   padding: EdgeInsets.symmetric(
+                                //                       vertical: 4, horizontal: 10),
+                                //                   decoration: BoxDecoration(
+                                //                     color: Color(0xFFFFF8DB),
+                                //                     borderRadius:
+                                //                         BorderRadius.circular(20),
+                                //                   ),
+                                //                   child: Row(
+                                //                     children: [
+                                //                       Icon(Icons.circle,
+                                //                           color: Color(0xFFBC9600),
+                                //                           size: 10),
+                                //                       SizedBox(width: 5),
+                                //                       Text('Pending',
+                                //                           style: TextStyle(
+                                //                               color: Colors.amber)),
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //                 Container(
+                                //                   padding: EdgeInsets.symmetric(
+                                //                       vertical: 4, horizontal: 10),
+                                //                   decoration: BoxDecoration(
+                                //                     color: Colors.green.shade50,
+                                //                     borderRadius:
+                                //                         BorderRadius.circular(20),
+                                //                   ),
+                                //                   child: Column(
+                                //                     crossAxisAlignment:
+                                //                         CrossAxisAlignment.start,
+                                //                     children: [
+                                //                       // Text(
+                                //                       //   'Project Status',
+                                //                       //   style: TextStyle(
+                                //                       //       color: Colors.black),
+                                //                       // ),
+                                //                       Row(
+                                //                         children: [
+                                //                           Icon(Icons.circle,
+                                //                               color: Colors.green,
+                                //                               size: 10),
+                                //                           SizedBox(width: 5),
+                                //                           Text(
+                                //                               service.project_status
+                                //                                   .toString(),
+                                //                               style: TextStyle(
+                                //                                   color: Colors
+                                //                                       .green)),
+                                //                         ],
+                                //                       ),
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //               ],
+                                //             ),
+                                //             SizedBox(height: 10),
+
+                                //             // Name and Date
+                                //             Row(
+                                //               mainAxisAlignment:
+                                //                   MainAxisAlignment.spaceBetween,
+                                //               children: [
+                                //                 Column(
+                                //                   crossAxisAlignment:
+                                //                       CrossAxisAlignment.start,
+                                //                   children: [
+                                //                     Text(
+                                //                       'Name',
+                                //                       style: TextStyle(
+                                //                           color: Colors.grey),
+                                //                     ),
+                                //                     Text(
+                                //                       service.clientName.toString(),
+                                //                       // 'Tom Cruise',
+                                //                       style: TextStyle(
+                                //                           fontWeight:
+                                //                               FontWeight.bold),
+                                //                     ),
+                                //                   ],
+                                //                 ),
+                                //                 Column(
+                                //                   crossAxisAlignment:
+                                //                       CrossAxisAlignment.start,
+                                //                   children: [
+                                //                     Text(
+                                //                       'Date',
+                                //                       style: TextStyle(
+                                //                           color: Colors.grey),
+                                //                     ),
+                                //                     Text(
+                                //                       formattedDate = DateFormat(
+                                //                               'dd-MM-yyyy')
+                                //                           .format(
+                                //                               service.createdDate),
+                                //                       // '28-Oct-2024',
+                                //                       style: TextStyle(
+                                //                           fontWeight:
+                                //                               FontWeight.bold),
+                                //                     ),
+                                //                   ],
+                                //                 ),
+                                //                 // Column(
+                                //                 //   crossAxisAlignment:
+                                //                 //       CrossAxisAlignment.start,
+                                //                 //   children: [
+                                //                 //     Text(
+                                //                 //       'Service Type',
+                                //                 //       style: TextStyle(
+                                //                 //           color: Colors.grey),
+                                //                 //     ),
+                                //                 //     Text(
+                                //                 //       service.serviceName
+                                //                 //           .toString(),
+                                //                 //       //'Approval, Construction, Interior',
+                                //                 //       style: TextStyle(
+                                //                 //           fontWeight:
+                                //                 //               FontWeight.bold),
+                                //                 //     ),
+                                //                 //   ],
+                                //                 // ),
+                                //               ],
+                                //             ),
+                                //             SizedBox(height: 10),
+                                //             Row(
+                                //               mainAxisAlignment:
+                                //                   MainAxisAlignment.spaceBetween,
+                                //               children: [
+                                //                 Column(
+                                //                   crossAxisAlignment:
+                                //                       CrossAxisAlignment.start,
+                                //                   children: [
+                                //                     Text(
+                                //                       'Service Type',
+                                //                       style: TextStyle(
+                                //                           color: Colors.grey),
+                                //                     ),
+                                //                     Text(
+                                //                       service.serviceName
+                                //                           .toString(),
+                                //                       //'Approval, Construction, Interior',
+                                //                       style: TextStyle(
+                                //                           fontWeight:
+                                //                               FontWeight.bold),
+                                //                     ),
+                                //                   ],
+                                //                 ),
+                                //                 GestureDetector(
+                                //                   onTap: () {
+                                //                     showenquiry(service);
+                                //                   },
+                                //                   child: Row(
+                                //                     crossAxisAlignment:
+                                //                         CrossAxisAlignment.center,
+                                //                     children: [
+                                //                       Text(
+                                //                         'View more',
+                                //                         style: TextStyle(
+                                //                             color: Colors.blue,
+                                //                             fontSize: 16),
+                                //                       ),
+                                //                       SizedBox(
+                                //                         width: 6,
+                                //                       ),
+                                //                       Container(
+                                //                         padding: EdgeInsets.all(6),
+                                //                         decoration: BoxDecoration(
+                                //                             color:
+                                //                                 Colors.blue.shade50,
+                                //                             borderRadius:
+                                //                                 BorderRadius
+                                //                                     .circular(6)),
+                                //                         child: Icon(
+                                //                           Icons.arrow_forward_ios,
+                                //                           size: 6,
+                                //                           color: Colors.blue,
+                                //                         ),
+                                //                       )
+                                //                     ],
+                                //                   ),
+                                //                 ),
+                                //               ],
+                                //             ),
+                                //           ],
+                                //         ),
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
+
+                                Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Row(
                                 children: [
@@ -837,19 +1041,56 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.end,
                                                   children: [
-                                                    Text(
-                                                      'Project Status',
-                                                      style: TextStyle(
-                                                          color: Colors.grey),
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 4,
+                                                              horizontal: 10),
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            Colors.blue.shade50,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                      ),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            'Project Status',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                  service
+                                                                      .project_status
+                                                                      .toString(),
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .blue)),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                    Text(
-                                                      service.project_status
-                                                          .toString(),
-                                                      //'Approval, Construction, Interior',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
+                                                    // Text(
+                                                    //   'Project Status',
+                                                    //   style: TextStyle(
+                                                    //       color: Colors.grey),
+                                                    // ),
+                                                    // Text(
+                                                    //   service.project_status
+                                                    //       .toString(),
+                                                    //   //'Approval, Construction, Interior',
+                                                    //   style: TextStyle(
+                                                    //       fontWeight:
+                                                    //           FontWeight.bold),
+                                                    // ),
                                                   ])
                                             ])
                                       ],
