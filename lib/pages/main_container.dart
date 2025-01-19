@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keynes/pages/auth/login_page.dart';
+import 'package:keynes/pages/enquire/enquire_page.dart';
 import 'package:keynes/pages/home/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,6 +26,7 @@ class _MainContainerState extends State<MainContainer>
   static List<Widget> pageOptions = <Widget>[
     HomeScreen(),
     const ServicePage(),
+    const EnquirePage(),
     const LoginPage()
   ];
 
@@ -35,7 +37,7 @@ class _MainContainerState extends State<MainContainer>
     });
   }
 
-   @override
+  @override
   initState() {
     super.initState();
     findLoginStatus();
@@ -47,15 +49,12 @@ class _MainContainerState extends State<MainContainer>
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       loginuser = prefs.getBool('isLoggedin');
-      if(loginuser == true){
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => DashboardContainer()),
-          );
-
+      if (loginuser == true) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => DashboardContainer()),
+        );
       }
-
-   
     });
     print("login user : $loginuser");
   }
@@ -133,6 +132,15 @@ class _MainContainerState extends State<MainContainer>
               ),
               //icon: Icon(Icons.book),
               label: 'Service',
+            ),
+            const BottomNavigationBarItem(
+              icon: Icon(Icons.call),
+              // icon: Image.asset(
+              //   AppAssets.serviceImg,
+              //   height: 20.0,
+              // ),
+              //icon: Icon(Icons.book),
+              label: 'Enquire',
             ),
             // BottomNavigationBarItem(
             //   icon: Image.asset(
