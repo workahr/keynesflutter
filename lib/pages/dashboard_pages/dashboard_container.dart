@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:keynes/pages/auth/login_page.dart';
+import 'package:keynes/pages/dashboard_pages/admin_dashboardscreen.dart';
 import 'package:keynes/pages/home/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,7 +8,7 @@ import '../../constants/app_assets.dart';
 import '../chat/chat_page.dart';
 import '../main_container.dart';
 import '../service_page.dart';
-import 'dashboard_adminscreen.dart';
+import 'dashboard_adminscreen_old.dart';
 import 'dashboard_screen.dart';
 
 class DashboardContainer extends StatefulWidget {
@@ -46,10 +47,10 @@ class _DashboardContainerState extends State<DashboardContainer>
 
       pageOptions = [
         (loginuser == "Super Admin")
-            ? Dashboard_adminscreen()
+            ? Admin_Dashboardscreen()
             : DashboardScreen(),
         ServicePage(),
-       // ChatPage(),
+        // ChatPage(),
       ];
     });
     print("login user : $loginuser");

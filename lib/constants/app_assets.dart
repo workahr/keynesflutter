@@ -83,6 +83,12 @@ class AppAssets {
   static const String increaseicon2 = 'assets/images/increase_icon2.png';
   static const String dot3 = 'assets/images/3dot.png';
   static const String containericon = 'assets/images/container.png';
-  static const String keynesServiceIcon = 'assets/images/keynes_service_icon.png';
-
+  static const String keynesServiceIcon =
+      'assets/images/keynes_service_icon.png';
+  static const String Bell_icon = 'assets/images/Bell_icon.png';
+  static const String edittext_pink_icon =
+      'assets/images/edittext_pink_icon.png';
+  static const String edittext_icon2 = 'assets/images/edittext_icon2.png';
+  static const String edittext_icon3 = 'assets/images/edittext_icon3.png';
+  static const String edittext_icon4 = 'assets/images/edittext_icon4.png';
 }

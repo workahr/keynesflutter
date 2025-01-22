@@ -19,7 +19,7 @@ import '../../widgets/custom_text_field_login.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
 import '../dashboard/dashboard_page.dart';
-import '../dashboard_pages/dashboard_adminscreen.dart';
+import '../dashboard_pages/dashboard_adminscreen_old.dart';
 import '../dashboard_pages/dashboard_container.dart';
 import '../dashboard_pages/dashboard_screen.dart';
 import 'auth_validations.dart';
