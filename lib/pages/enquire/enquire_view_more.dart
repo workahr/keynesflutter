@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:keynes/pages/enquire/sub_widgets/view_enquire_table.dart';
+import '../../services/keynes_api_service.dart';
+import '../../constants/app_assets.dart';
+import '../../constants/app_colors.dart';
+import '../../services/comFuncService.dart';
 
 class EnquireViewMore extends StatelessWidget {
+ // final String enquiryid;
   final String dateOfEnquiry;
   final String saleExecutive;
   final String confirmDate;
@@ -17,6 +21,7 @@ class EnquireViewMore extends StatelessWidget {
 
   const EnquireViewMore({
     Key? key,
+  //  required this.enquiryid,
     required this.dateOfEnquiry,
     required this.saleExecutive,
     required this.confirmDate,
@@ -30,6 +35,62 @@ class EnquireViewMore extends StatelessWidget {
     required this.projectSafetyCoordinator,
     required this.totalService,
   }) : super(key: key);
+
+
+
+   final List<Map<String, String>> paymentData =const [
+    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
+    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
+    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
+    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
+    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
+    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
+    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
+    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
+  ];
+
+  //  List<CategoryProductList> enquirydetailslistpage = [];
+  //  List<CategoryProductList> enquirydetailslistpageAll = [];
+
+
+
+  //  Future<void> getenquirybyadmin_app() async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+
+  //   try {
+  //     var result = await apiService.getenquirybyadmin_app(widget.enquiryid);
+  //     var response = storedetailmenulistmodelFromJson(result);
+
+  //     if (response.status.toString().toUpperCase() == 'SUCCESS') {
+  //       print("print");
+  //       setState(() {
+  //         enquirydetailslistpage = response.categoryProductList;
+  //         enquirydetailslistpageAll = enquirydetailslistpage;
+  //         print(enquirydetailslistpage);
+  //         print(enquirydetailslistpage);
+  //         isLoading = false;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         enquirydetailslistpage = [];
+  //         enquirydetailslistpageAll = [];
+  //         isLoading = false;
+  //       });
+  //       // showInSnackBar(context, response.message.toString());
+  //       print(response.message.toString());
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       enquirydetailslistpage = [];
+  //       enquirydetailslistpageAll = [];
+  //       isLoading = false;
+  //     });
+  //     // showInSnackBar(context, 'Error occurred: $e');
+  //     print(e);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +243,67 @@ class EnquireViewMore extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   height: 400,
-                  child: PaymentTableScreen(),
+                  child:   Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.shade200, width: 1.0),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
+          child: Column(
+            children: [
+              // Table Header
+              Container(
+                color: Colors.white,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Expanded(
+                        child: Text("Payment Date",
+                            style: TextStyle(fontWeight: FontWeight.bold))),
+                    Expanded(
+                        child: Text("Payment Mode",
+                            style: TextStyle(fontWeight: FontWeight.bold))),
+                    Expanded(
+                        child: Text("Payment Amount",
+                            style: TextStyle(fontWeight: FontWeight.bold))),
+                  ],
+                ),
+              ),
+              // Table Rows
+              Expanded(
+                child: ListView.builder(
+                  itemCount: paymentData.length,
+                  itemBuilder: (context, index) {
+                    final row = paymentData[index];
+                    return Container(
+                      color: index % 2 == 0 ? Colors.blue[50] : Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(child: Text(row["date"]!)),
+                          Expanded(child: Text(row["mode"]!)),
+                          Expanded(child: Text(row["amount"]!)),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+                  
+                  
+                    // PaymentTableScreen(),
                 ),
               ),
             ],

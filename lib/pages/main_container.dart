@@ -26,7 +26,7 @@ class _MainContainerState extends State<MainContainer>
   static List<Widget> pageOptions = <Widget>[
     HomeScreen(),
     const ServicePage(),
-    const EnquirePage(),
+    // const EnquirePage(),
     const LoginPage()
   ];
 
@@ -133,15 +133,15 @@ class _MainContainerState extends State<MainContainer>
               //icon: Icon(Icons.book),
               label: 'Service',
             ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.call),
-              // icon: Image.asset(
-              //   AppAssets.serviceImg,
-              //   height: 20.0,
-              // ),
-              //icon: Icon(Icons.book),
-              label: 'Enquire',
-            ),
+            // const BottomNavigationBarItem(
+            //   icon: Icon(Icons.call),
+            //   // icon: Image.asset(
+            //   //   AppAssets.serviceImg,
+            //   //   height: 20.0,
+            //   // ),
+            //   //icon: Icon(Icons.book),
+            //   label: 'Enquire',
+            // ),
             // BottomNavigationBarItem(
             //   icon: Image.asset(
             //     AppAssets.bookmarkIcon,

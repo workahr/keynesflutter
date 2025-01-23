@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants/app_assets.dart';
 import '../chat/chat_page.dart';
+import '../enquire/enquire_page.dart';
 import '../main_container.dart';
 import '../service_page.dart';
 import 'dashboard_adminscreen_old.dart';
@@ -50,6 +51,7 @@ class _DashboardContainerState extends State<DashboardContainer>
             ? Admin_Dashboardscreen()
             : DashboardScreen(),
         ServicePage(),
+        const EnquirePage(),
         // ChatPage(),
       ];
     });
@@ -64,7 +66,7 @@ class _DashboardContainerState extends State<DashboardContainer>
   // ];
 
   void _onItemTapped(int index) async {
-    if (index == 2) {
+    if (index == 3) {
       // Handle logout
       await _handleLogout();
     } else {
@@ -152,6 +154,15 @@ class _DashboardContainerState extends State<DashboardContainer>
               ),
               //icon: Icon(Icons.book),
               label: 'Service',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.call),
+              // icon: Image.asset(
+              //   AppAssets.serviceImg,
+              //   height: 20.0,
+              // ),
+              //icon: Icon(Icons.book),
+              label: 'Enquire',
             ),
             // BottomNavigationBarItem(
             //   icon: Icon(Icons.chat),
