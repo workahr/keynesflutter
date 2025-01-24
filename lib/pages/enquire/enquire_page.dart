@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:keynes/pages/enquire/date_picker.dart';
 import 'package:shimmer/shimmer.dart';
 import 'enquire_view_more.dart';
 import 'enquiry_list_model.dart';
 import '../../services/keynes_api_service.dart';
 import '../../constants/app_assets.dart';
-import '../../constants/app_colors.dart';
+import 'package:intl/intl.dart';
 import '../../services/comFuncService.dart';
+import 'from_to_date_picker.dart';
 
 class EnquirePage extends StatefulWidget {
   const EnquirePage({super.key});
@@ -18,6 +18,8 @@ class EnquirePage extends StatefulWidget {
 class _EnquirePageState extends State<EnquirePage> {
   final KeynesApiService apiService = KeynesApiService();
   bool isLoading = false;
+  DateTime? fromDate;
+  DateTime? toDate;
   @override
   void initState() {
     getenquirylistbyadmin_app();
@@ -26,6 +28,36 @@ class _EnquirePageState extends State<EnquirePage> {
 
   List<Record>? enquiryesList = [];
   List<Record>? enquiryesListAll = [];
+
+  void filterEnquiriesByDate() {
+    if (fromDate != null && toDate != null) {
+      setState(() {
+        enquiryesList = enquiryesListAll!.where((record) {
+          DateTime? createdDate = parseApiDate(record.createdDate);
+
+          if (createdDate != null) {
+            return createdDate
+                    .isAfter(fromDate!.subtract(const Duration(days: 1))) &&
+                createdDate.isBefore(toDate!.add(const Duration(days: 1)));
+          }
+          return false;
+        }).toList();
+      });
+    } else {
+      setState(() {
+        enquiryesList = enquiryesListAll;
+      });
+    }
+  }
+
+  DateTime? parseApiDate(String apiDate) {
+    try {
+      return DateFormat("dd-MMM-yyyy").parse(apiDate);
+    } catch (e) {
+      print("Error parsing date: $e");
+      return null;
+    }
+  }
 
   Future getenquirylistbyadmin_app() async {
     await apiService.getBearerToken();
@@ -48,9 +80,6 @@ class _EnquirePageState extends State<EnquirePage> {
     setState(() {});
   }
 
-  DateTime? _fromDate;
-  DateTime? _toDate;
-
   Future<DateTime?> _selectDate({
     required BuildContext context,
     required DateTime initialDate,
@@ -64,7 +93,6 @@ class _EnquirePageState extends State<EnquirePage> {
       lastDate: lastDate ?? DateTime(2100),
     );
   }
-
 
 //Shimmer
   Widget _buildShimmerPlaceholder() {
@@ -137,7 +165,7 @@ class _EnquirePageState extends State<EnquirePage> {
               height: 20,
             ),
             ClipRRect(
-              borderRadius: BorderRadius.circular(13), // Add border radius
+              borderRadius: BorderRadius.circular(13),
               child: Container(
                 width: double.infinity,
                 height: 500,
@@ -149,7 +177,6 @@ class _EnquirePageState extends State<EnquirePage> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -178,38 +205,15 @@ class _EnquirePageState extends State<EnquirePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: DatePickerField(
-                            label: "From",
-                            onDateSelected: (date) {
-                              setState(() {
-                                _fromDate = date;
-                                _toDate = null;
-                              });
-                              print("From Date: $_fromDate");
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 16.0),
-                        Expanded(
-                          child: DatePickerField(
-                            label: "To",
-                            onDateSelected: (date) {
-                              setState(() {
-                                _toDate = date;
-                              });
+                    child: FromAndToDatePickerField(
+                      onDatesSelected: (from, to) {
+                        setState(() {
+                          fromDate = from;
+                          toDate = to;
 
-                              print("To Date: $_toDate");
-                            },
-                            datePickerConfig: DatePickerConfig(
-                                firstDate:
-                                    _fromDate?.add(const Duration(days: 1))),
-                          ),
-                        ),
-                      ],
+                          filterEnquiriesByDate();
+                        });
+                      },
                     ),
                   ),
                   Expanded(
