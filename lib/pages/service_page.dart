@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import '../constants/app_assets.dart';
 import '../constants/app_colors.dart';
 import '../models/service_list_model.dart';
@@ -16,7 +17,7 @@ class ServicePage extends StatefulWidget {
 
 class _ServicePageState extends State<ServicePage> {
   final KeynesApiService apiService = KeynesApiService();
-
+  bool isLoading = false;
   @override
   void initState() {
     getAllServices();
@@ -46,6 +47,74 @@ class _ServicePageState extends State<ServicePage> {
     setState(() {});
   }
 
+//Shimmer
+  Widget _buildShimmerPlaceholder() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Container(
+                width: double.infinity,
+                height: 120,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Container(
+                width: double.infinity,
+                height: 120,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Container(
+                width: double.infinity,
+                height: 120,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Container(
+                width: double.infinity,
+                height: 120,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13), // Add border radius
+              child: Container(
+                width: double.infinity,
+                height: 500,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -67,7 +136,12 @@ class _ServicePageState extends State<ServicePage> {
         automaticallyImplyLeading: false,
       ),
       body: servicesList == null || servicesList!.isEmpty
-          ? Center(child: CircularProgressIndicator()) // Loading indicator
+          ? ListView.builder(
+              itemCount: 8,
+              itemBuilder: (context, index) {
+                return _buildShimmerPlaceholder();
+              },
+            )
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -77,7 +151,8 @@ class _ServicePageState extends State<ServicePage> {
                       //height: screenHeight / 4.8,
                       margin: EdgeInsets.symmetric(vertical: 8.0),
                       decoration: BoxDecoration(
-                        color: Color(0xFF0151AF), // Background color of the container
+                        color: Color(
+                            0xFF0151AF), // Background color of the container
                         borderRadius: BorderRadius.circular(18),
                       ),
                       padding: EdgeInsets.all(16.0),
@@ -85,16 +160,21 @@ class _ServicePageState extends State<ServicePage> {
                         children: [
                           // Main content (icon + service name) in a row
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start, // Align content to the top
+                            crossAxisAlignment: CrossAxisAlignment
+                                .start, // Align content to the top
                             children: [
                               // Icon with a white background (left)
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.white, // White background for the icon
-                                  borderRadius: BorderRadius.circular(12), // Rounded edges
+                                  color: Colors
+                                      .white, // White background for the icon
+                                  borderRadius: BorderRadius.circular(
+                                      12), // Rounded edges
                                 ),
-                                height: screenHeight / 8.3, // Set the height appropriately
-                                width: screenWidth * 0.23, // Adjust width for the icon
+                                height: screenHeight /
+                                    8.3, // Set the height appropriately
+                                width: screenWidth *
+                                    0.23, // Adjust width for the icon
                                 child: Image.asset(
                                   AppAssets.keynesServiceIcon,
                                   // height: 10.0, // Set the height you want for the image
@@ -102,12 +182,15 @@ class _ServicePageState extends State<ServicePage> {
                                   //fit: BoxFit.contain, // Ensures image stays within bounds
                                 ),
                               ),
-                              SizedBox(width: screenWidth * 0.03), // Space between icon and text
+                              SizedBox(
+                                  width: screenWidth *
+                                      0.03), // Space between icon and text
 
                               // Service name (top-aligned)
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(top: 8.0), // Add some space from the top
+                                  padding: const EdgeInsets.only(
+                                      top: 8.0), // Add some space from the top
                                   child: Text(
                                     service.name.toString(),
                                     style: TextStyle(
@@ -121,14 +204,15 @@ class _ServicePageState extends State<ServicePage> {
                               ),
                             ],
                           ),
-                          
+
                           // Enquiry button at the bottom-right
                           Positioned(
                             bottom: 0,
                             right: 0,
                             child: ButtonWidget(
                               title: 'Enquiry',
-                              width: screenWidth * 0.25, // Adjust width for the button
+                              width: screenWidth *
+                                  0.25, // Adjust width for the button
                               onTap: () {
                                 Navigator.push(
                                   context,

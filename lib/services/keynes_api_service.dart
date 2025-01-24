@@ -1209,12 +1209,10 @@ class KeynesApiService {
     }
   }
 
-
-   //get all Enquire for admin 
-  Future getenquirylistbyadmin_app() async {
+  // getdashboardrecord
+  Future getdashboardrecord() async {
     try {
-      final url =
-          Uri.parse('${liveApiPath}getenquirylistbyadmin_app');
+      final url = Uri.parse('${liveApiPath}getdashboardrecord');
       final response = await client.get(
         url,
         headers: headerData,
@@ -1229,13 +1227,29 @@ class KeynesApiService {
     }
   }
 
+  //get all Enquire for admin
+  Future getenquirylistbyadmin_app() async {
+    try {
+      final url = Uri.parse('${liveApiPath}getenquirylistbyadmin_app');
+      final response = await client.get(
+        url,
+        headers: headerData,
+      );
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return response;
+      }
+    } catch (e) {
+      return e;
+    }
+  }
 
-
-  // get  Enquire by id  for admin 
+  // get  Enquire by id  for admin
 
   Future getenquirybyadmin_app(id) async {
     try {
-      final url = Uri.parse('${liveApiPath}v1/getenquirybyadmin_app?id=$id');
+      final url = Uri.parse('${liveApiPath}getenquirybyadmin_app?id=$id');
       final response = await client.get(
         url,
         headers: headerData,
@@ -1249,5 +1263,4 @@ class KeynesApiService {
       return e;
     }
   }
-
 }

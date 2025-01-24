@@ -1,8 +1,11 @@
 //import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-
+import 'package:shimmer/shimmer.dart';
 import '../../constants/app_assets.dart';
+import '../../models/dashboardrecord_model.dart';
+import '../../services/comFuncService.dart';
+import '../../services/keynes_api_service.dart';
 
 class Admin_Dashboardscreen extends StatefulWidget {
   @override
@@ -10,6 +13,114 @@ class Admin_Dashboardscreen extends StatefulWidget {
 }
 
 class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
+  final KeynesApiService apiService = KeynesApiService();
+
+  @override
+  void initState() {
+    super.initState();
+    getdashboardrecord();
+  }
+
+//getdashboardrecord
+
+  // List<ServiceList>? recordList = [];
+  // List<ServiceList>? recordListAll = [];
+
+  Record? recordList;
+
+  Future getdashboardrecord() async {
+    await apiService.getBearerToken();
+setState(() {
+      isLoading = true;
+    });
+    var result = await apiService.getdashboardrecord();
+
+    print('hi $result');
+    DashboardRecordModel response = dashboardRecordModelFromJson(result);
+    print('Raw JSON: $response');
+    print('record : ${response.record}');
+
+    if (response.status == 'SUCCESS' && response.record != null) {
+      setState(() {
+        recordList = response.record;
+
+        print('Raw');
+         isLoading = false;
+      });
+    } else {
+      showInSnackBar(context, "Data not found");  isLoading = false;
+    }
+    setState(() {});
+  }
+
+
+ bool isLoading = false;
+  Widget _buildShimmerPlaceholder() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Container(
+                width: double.infinity,
+                height: 150,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Container(
+                width: double.infinity,
+                height: 100,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 60,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Container(
+                width: double.infinity,
+                height: 300,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Container(
+                width: double.infinity,
+                height: 100,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13), // Add border radius
+              child: Container(
+                width: double.infinity,
+                height: 500,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,11 +144,18 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            //  crossAxisAlignment: CrossAxisAlignment.c,
-            children: [
-              // Overall Payment Section
+        body: isLoading || recordList == null
+            ? ListView.builder(
+                itemCount: 8,
+                itemBuilder: (context, index) {
+                  return _buildShimmerPlaceholder();
+                },
+              )
+            :  SingleChildScrollView(
+            child: Column(
+                
+                children: [
+           
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -49,14 +167,15 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'AED15,000.00',
-                    style: TextStyle(
-                      color: Color(0xFF01519D),
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
+                  if (recordList!.totalpayment.toString() != null)
+                    Text(
+                      recordList!.totalpayment.toString(),
+                      style: TextStyle(
+                        color: Color(0xFF01519D),
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
                   const SizedBox(height: 8),
                   Container(
                     padding:
@@ -127,13 +246,14 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
                                         size: 28, color: Colors.blue),
                                   ],
                                 ),
-                                Text(
-                                  'AED9,000.00',
-                                  style: const TextStyle(
-                                    fontSize: 21,
-                                    fontWeight: FontWeight.bold,
+                                if (recordList!.paidpayment.toString() != null)
+                                  Text(
+                                    recordList!.paidpayment.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 21,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
                               ],
                             ),
                           ),
@@ -178,13 +298,14 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
                                         size: 28, color: Colors.blue),
                                   ],
                                 ),
-                                Text(
-                                  'AED9,000.00',
-                                  style: const TextStyle(
-                                    fontSize: 21,
-                                    fontWeight: FontWeight.bold,
+                                if (recordList!.balancepayment.toString() != null)
+                                  Text(
+                                    recordList!.balancepayment.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 21,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
                               ],
                             ),
                           ),
@@ -256,14 +377,15 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
                               height: 40.0,
                               width: 40.0,
                             ),
-                            Text(
-                              '5,500',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF1C1C3B),
+                            if (recordList!.closeEnquiry.toString() != null)
+                              Text(
+                                recordList!.closeEnquiry.toString(),
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF1C1C3B),
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ],
@@ -303,14 +425,15 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
                               height: 40.0,
                               width: 40.0,
                             ),
-                            Text(
-                              '2,500',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF1C1C3B), // Text color
+                           if (recordList!.totalEnquiry.toString() != null)
+                              Text(
+                                recordList!.totalEnquiry.toString(),
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF1C1C3B), // Text color
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ],
@@ -350,14 +473,15 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
                               height: 40.0,
                               width: 40.0,
                             ),
-                            Text(
-                              '1,500',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF1C1C3B), // Text color
+                            if (recordList!.activeEnquiry.toString() != null)
+                              Text(
+                                recordList!.activeEnquiry.toString(),
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF1C1C3B), // Text color
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ],
@@ -397,14 +521,15 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
                               height: 40.0,
                               width: 40.0,
                             ),
-                            Text(
-                              '500',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF1C1C3B), // Text color
+                           if (recordList!.confirmEnquiry.toString() != null)
+                              Text(
+                                recordList!.confirmEnquiry.toString(),
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF1C1C3B), // Text color
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ],
@@ -424,103 +549,85 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
                   ),
                 ),
               ),
-              Row(
+              if (recordList != null)  Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: PieChart(
                       dataMap: {
-                        "Construction": 800,
-                        "Authority Approvals": 150,
-                        "Interior Design": 850,
-                        "Property Management": 560,
-                        "General Maintenance": 150,
-                        "Pest Control Services": 120,
-                        "Business Support Services": 220,
-                        "Additional Services": 160,
-                        "IT and Security Solutions": 155,
+                        for (var service in recordList!.serviceList)
+                          service.name: service.count.toDouble(),
                       },
                       colorList: [
-                        Colors.green, // Construction
-                        Colors.red, // Authority Approvals
-                        Colors.orange, // Interior Design
-                        Colors.purple, // Property Management
-                        Colors.pink, // General Maintenance
-                        Colors.blue, // Pest Control Services
-                        Colors.blueAccent, // Business Support Services
-                        Colors.teal, // Additional Services
-                        Colors.indigo, // IT and Security Solutions
+                        Colors.green,
+                        Colors.red,
+                        Colors.orange,
+                        Colors.purple,
+                        Colors.pink,
+                        Colors.blue,
+                        Colors.blueAccent,
+                        Colors.teal,
+                        Colors.indigo,
                       ], // Custom colors for the chart
                       chartType: ChartType.ring,
-                      chartRadius: MediaQuery.of(context).size.width /
-                          1.8, // Adjust width if needed
-                      centerText: "Total Invoice \nValue \n 09",
+                      chartRadius: MediaQuery.of(context).size.width / 1.8,
+                      centerText: "Total Invoice \nValue",
                       centerTextStyle: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                       chartValuesOptions: const ChartValuesOptions(
-                          showChartValues: false,
-                          showChartValuesOutside: false,
-                          showChartValuesInPercentage: false,
-                          showChartValueBackground: false),
+                        showChartValues: false,
+                        showChartValuesOutside: false,
+                        showChartValuesInPercentage: false,
+                        showChartValueBackground: false,
+                      ),
                       ringStrokeWidth: 32,
                       legendOptions: const LegendOptions(
                         showLegends: false, // Hide default legends
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  // Wrap the Column inside an Expanded to prevent overflow
+                  const SizedBox(width: 20),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildValueText(Colors.green, 800),
-                        _buildValueText(Colors.red, 150),
-                        _buildValueText(Colors.orange, 850),
-                        _buildValueText(Colors.purple, 560),
-                        _buildValueText(Colors.pink, 150),
-                        _buildValueText(Colors.blue, 120),
-                        _buildValueText(Colors.blueAccent, 220),
-                        _buildValueText(Colors.teal, 160),
-                        _buildValueText(Colors.indigo, 155),
+                        for (var service in recordList!.serviceList)
+                          _buildValueText(
+                            _getColorForIndex(
+                                recordList!.serviceList.indexOf(service)),
+                            service.count,
+                          ),
                       ],
                     ),
                   ),
                 ],
               ),
 
-// Center Text
+// GridView for Legends
               const SizedBox(height: 20),
-              GridView.count(
+            if (recordList != null)    GridView.count(
                 crossAxisCount: 2, // 2 items per row
                 shrinkWrap: true, // Shrinks to fit content
                 physics:
-                    const NeverScrollableScrollPhysics(), // Disables scrolling
+                    const NeverScrollableScrollPhysics(), // Disable scrolling
                 padding: const EdgeInsets.all(10.0),
                 mainAxisSpacing: 5.0, // Vertical space between items
                 crossAxisSpacing: 5.0, // Horizontal space between items
                 childAspectRatio: 4.5, // Aspect ratio of the grid items
                 children: [
-                  _buildLegend(Colors.green, "Construction"),
-                  _buildLegend(Colors.red, "Authority Approvals"),
-                  _buildLegend(Colors.orange, "Interior Design"),
-                  _buildLegend(Colors.purple, "Property Management"),
-                  _buildLegend(Colors.pink, "General Maintenance"),
-                  _buildLegend(Colors.blue, "Pest Control Services"),
-                  _buildLegend(Colors.blueAccent, "Business Support Services"),
-                  _buildLegend(Colors.teal, "Additional Services"),
-                  _buildLegend(Colors.indigo, "IT and Security Solutions"),
+                  for (var service in recordList!.serviceList)
+                    _buildLegend(
+                      _getColorForIndex(
+                          recordList!.serviceList.indexOf(service)),
+                      service.name,
+                    ),
                 ],
               ),
-            ],
-          ),
-        ));
+            ])));
   }
 
   Widget _buildValueText(Color color, double value) {
@@ -531,12 +638,12 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
           height: 10,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(10), // This makes it round
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
         const SizedBox(width: 8),
         Text(
-          "$value", // Show only the value here
+          "$value",
           style: const TextStyle(fontSize: 16),
         ),
       ],
@@ -551,12 +658,11 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
           height: 10,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(10), // This makes it round
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
         const SizedBox(width: 8),
         Expanded(
-          // Ensure the text expands properly within the available space
           child: Text(
             label,
             style: const TextStyle(fontSize: 14),
@@ -566,5 +672,20 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
         ),
       ],
     );
+  }
+
+  Color _getColorForIndex(int index) {
+    const colorList = [
+      Colors.green,
+      Colors.red,
+      Colors.orange,
+      Colors.purple,
+      Colors.pink,
+      Colors.blue,
+      Colors.blueAccent,
+      Colors.teal,
+      Colors.indigo,
+    ];
+    return colorList[index % colorList.length];
   }
 }

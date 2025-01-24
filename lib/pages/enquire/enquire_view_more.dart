@@ -3,94 +3,152 @@ import '../../services/keynes_api_service.dart';
 import '../../constants/app_assets.dart';
 import '../../constants/app_colors.dart';
 import '../../services/comFuncService.dart';
+import 'enquiry_details_model.dart';
+import 'package:shimmer/shimmer.dart';
+class EnquireViewMore extends StatefulWidget {
+  int enquiryid;
 
-class EnquireViewMore extends StatelessWidget {
- // final String enquiryid;
-  final String dateOfEnquiry;
-  final String saleExecutive;
-  final String confirmDate;
-  final String duration;
-  final String amount;
-  final String closingDate;
-  final String projectEngineer;
-  final String engineerAdmin;
-  final String departmentEngineer;
-  final String engineer;
-  final String projectSafetyCoordinator;
-  final String totalService;
-
-  const EnquireViewMore({
+  EnquireViewMore({
     Key? key,
-  //  required this.enquiryid,
-    required this.dateOfEnquiry,
-    required this.saleExecutive,
-    required this.confirmDate,
-    required this.duration,
-    required this.amount,
-    required this.closingDate,
-    required this.projectEngineer,
-    required this.engineerAdmin,
-    required this.departmentEngineer,
-    required this.engineer,
-    required this.projectSafetyCoordinator,
-    required this.totalService,
+    required this.enquiryid,
   }) : super(key: key);
+  @override
+  _EnquireViewMoreState createState() => _EnquireViewMoreState();
+}
+
+class _EnquireViewMoreState extends State<EnquireViewMore> {
+  final KeynesApiService apiService = KeynesApiService();
+
+  @override
+  void initState() {
+    getenquirybyadmin_app();
+    super.initState();
+  }
+
+  Record? enquirydetailslistpage;
+  bool isLoading = false;
+
+  Future<void> getenquirybyadmin_app() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      var result = await apiService.getenquirybyadmin_app(widget.enquiryid);
+      var response = enquirydetailsListmodelFromJson(result);
+
+      if (response.status.toString().toUpperCase() == 'SUCCESS') {
+        print("print");
+        setState(() {
+          enquirydetailslistpage = response.record;
+
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          //  enquirydetailslistpage = [];
+          //  enquirydetailslistpageAll = [];
+          isLoading = false;
+        });
+        // showInSnackBar(context, response.message.toString());
+        print(response.message.toString());
+      }
+    } catch (e) {
+      setState(() {
+        // enquirydetailslistpage = [];
+        // enquirydetailslistpageAll = [];
+        isLoading = false;
+      });
+      // showInSnackBar(context, 'Error occurred: $e');
+      print(e);
+    }
+  }
 
 
+  //Shimmer
+  Widget _buildShimmerPlaceholder() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey.shade300,
+        highlightColor: Colors.grey.shade100,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(13),
+                  child: Container(
+                    width: double.infinity,
+                    height: 60,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(13),
+                  child: Container(
+                    width: double.infinity,
+                    height: 60,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Container(
+                width: double.infinity,
+                height: 500,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Container(
+                width: double.infinity,
+                height: 60,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: Container(
+                width: double.infinity,
+                height: 60,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13), // Add border radius
+              child: Container(
+                width: double.infinity,
+                height: 500,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-   final List<Map<String, String>> paymentData =const [
-    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
-    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
-    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
-    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
-    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
-    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
-    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
-    {"date": "14-12-2024", "mode": "Cash", "amount": "AED352.00"},
-  ];
-
-  //  List<CategoryProductList> enquirydetailslistpage = [];
-  //  List<CategoryProductList> enquirydetailslistpageAll = [];
-
-
-
-  //  Future<void> getenquirybyadmin_app() async {
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-
-  //   try {
-  //     var result = await apiService.getenquirybyadmin_app(widget.enquiryid);
-  //     var response = storedetailmenulistmodelFromJson(result);
-
-  //     if (response.status.toString().toUpperCase() == 'SUCCESS') {
-  //       print("print");
-  //       setState(() {
-  //         enquirydetailslistpage = response.categoryProductList;
-  //         enquirydetailslistpageAll = enquirydetailslistpage;
-  //         print(enquirydetailslistpage);
-  //         print(enquirydetailslistpage);
-  //         isLoading = false;
-  //       });
-  //     } else {
-  //       setState(() {
-  //         enquirydetailslistpage = [];
-  //         enquirydetailslistpageAll = [];
-  //         isLoading = false;
-  //       });
-  //       // showInSnackBar(context, response.message.toString());
-  //       print(response.message.toString());
-  //     }
-  //   } catch (e) {
-  //     setState(() {
-  //       enquirydetailslistpage = [];
-  //       enquirydetailslistpageAll = [];
-  //       isLoading = false;
-  //     });
-  //     // showInSnackBar(context, 'Error occurred: $e');
-  //     print(e);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +170,14 @@ class EnquireViewMore extends StatelessWidget {
           },
         ),
       ),
-      body: Container(
+      body: isLoading
+          ? ListView.builder(
+              itemCount: 8,
+              itemBuilder: (context, index) {
+                return _buildShimmerPlaceholder();
+              },
+            )
+          : Container(
         color: Colors.grey[100],
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -124,13 +189,13 @@ class EnquireViewMore extends StatelessWidget {
                   Expanded(
                     child: DetailSection(
                       label: "Date of enquiry",
-                      value: dateOfEnquiry,
+                      value: enquirydetailslistpage!.createdDate ?? '',
                     ),
                   ),
                   Expanded(
                     child: DetailSection(
                       label: "Sale Executive",
-                      value: saleExecutive,
+                      value: enquirydetailslistpage!.salesExeName ?? '',
                     ),
                   ),
                 ],
@@ -141,13 +206,15 @@ class EnquireViewMore extends StatelessWidget {
                   Expanded(
                     child: DetailSection(
                       label: "Confirm Date",
-                      value: confirmDate,
+                      value: enquirydetailslistpage!.confirmedDate ??
+                          '', // confirmDate,
                     ),
                   ),
                   Expanded(
                     child: DetailSection(
                       label: "Duration",
-                      value: duration,
+                      value:
+                          enquirydetailslistpage!.duration ?? '', // duration,
                     ),
                   ),
                 ],
@@ -158,13 +225,15 @@ class EnquireViewMore extends StatelessWidget {
                   Expanded(
                     child: DetailSection(
                       label: "Amount",
-                      value: amount,
+                      value: enquirydetailslistpage!.totalAmount
+                          .toString(), // amount,
                     ),
                   ),
                   Expanded(
                     child: DetailSection(
                       label: "Closing Date",
-                      value: closingDate,
+                      value: enquirydetailslistpage!.closedDate ??
+                          '', // closingDate,
                     ),
                   ),
                 ],
@@ -186,13 +255,15 @@ class EnquireViewMore extends StatelessWidget {
                   Expanded(
                     child: DetailSection(
                       label: "Project Engineer",
-                      value: projectEngineer,
+                      value: enquirydetailslistpage!.projEngName ??
+                          '', // projectEngineer,
                     ),
                   ),
                   Expanded(
                     child: DetailSection(
                       label: "Engineer Admin",
-                      value: engineerAdmin,
+                      value: enquirydetailslistpage!.engAdmin ??
+                          '', // engineerAdmin,
                     ),
                   ),
                 ],
@@ -203,13 +274,15 @@ class EnquireViewMore extends StatelessWidget {
                   Expanded(
                     child: DetailSection(
                       label: "Department Engineer",
-                      value: departmentEngineer,
+                      value: enquirydetailslistpage!.deptEngName ??
+                          '', // departmentEngineer,
                     ),
                   ),
                   Expanded(
                     child: DetailSection(
                       label: "Engineer",
-                      value: engineer,
+                      value: enquirydetailslistpage!.enginnersName ??
+                          '', // engineer,
                     ),
                   ),
                 ],
@@ -220,7 +293,8 @@ class EnquireViewMore extends StatelessWidget {
                   Expanded(
                     child: DetailSection(
                       label: "Project Safety Coordinator",
-                      value: projectSafetyCoordinator,
+                      value: enquirydetailslistpage!.safetyEngName ??
+                          '', // projectSafetyCoordinator,
                     ),
                   ),
                 ],
@@ -231,7 +305,8 @@ class EnquireViewMore extends StatelessWidget {
                   Expanded(
                     child: DetailSection(
                       label: "Total Service",
-                      value: totalService,
+                      value: enquirydetailslistpage!.totalServices
+                          .toString(), // totalService,
                     ),
                   ),
                 ],
@@ -243,67 +318,84 @@ class EnquireViewMore extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   height: 400,
-                  child:   Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade200, width: 1.0),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
-          child: Column(
-            children: [
-              // Table Header
-              Container(
-                color: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Expanded(
-                        child: Text("Payment Date",
-                            style: TextStyle(fontWeight: FontWeight.bold))),
-                    Expanded(
-                        child: Text("Payment Mode",
-                            style: TextStyle(fontWeight: FontWeight.bold))),
-                    Expanded(
-                        child: Text("Payment Amount",
-                            style: TextStyle(fontWeight: FontWeight.bold))),
-                  ],
-                ),
-              ),
-              // Table Rows
-              Expanded(
-                child: ListView.builder(
-                  itemCount: paymentData.length,
-                  itemBuilder: (context, index) {
-                    final row = paymentData[index];
-                    return Container(
-                      color: index % 2 == 0 ? Colors.blue[50] : Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12.0, horizontal: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(child: Text(row["date"]!)),
-                          Expanded(child: Text(row["mode"]!)),
-                          Expanded(child: Text(row["amount"]!)),
-                        ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Colors.grey.shade200, width: 1.0),
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-                  
-                  
-                    // PaymentTableScreen(),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Column(
+                          children: [
+                            // Table Header
+                            Container(
+                              color: Colors.white,
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0, horizontal: 8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Expanded(
+                                      child: Text("Payment Date",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold))),
+                                  Expanded(
+                                      child: Text("Payment Mode",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold))),
+                                  Expanded(
+                                      child: Text("Payment Amount",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold))),
+                                ],
+                              ),
+                            ),
+                            // Table Rows
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: enquirydetailslistpage
+                                        ?.paymentHistory.length ??
+                                    0,
+                                itemBuilder: (context, index) {
+                                  final payment = enquirydetailslistpage
+                                      ?.paymentHistory[index];
+
+                                  return Container(
+                                    color: index % 2 == 0
+                                        ? Colors.blue[50]
+                                        : Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                            child: Text(payment!.createdDate ??
+                                                "")), // Date
+                                        Expanded(
+                                            child: Text(payment.paymentMode ??
+                                                "")), // Mode
+                                        Expanded(
+                                            child: Text(payment.amount ??
+                                                "")), // Amount
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // PaymentTableScreen(),
                 ),
               ),
             ],
