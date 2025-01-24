@@ -7,6 +7,7 @@ import '../../constants/app_assets.dart';
 import 'package:intl/intl.dart';
 import '../../services/comFuncService.dart';
 import 'from_to_date_picker.dart';
+import 'package:page_transition/page_transition.dart';
 
 class EnquirePage extends StatefulWidget {
   const EnquirePage({super.key});
@@ -388,14 +389,27 @@ class _EnquirePageState extends State<EnquirePage> {
                                     child: TextButton(
                                       onPressed: () {
                                         Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                EnquireViewMore(
-                                              enquiryid: enquiry!.id,
-                                            ),
-                                          ),
-                                        );
+                                            context,
+                                            PageTransition(
+                                                duration:
+                                                    Duration(milliseconds: 500),
+                                                reverseDuration:
+                                                    Duration(seconds: 1),
+                                                child: EnquireViewMore(
+                                                  enquiryid: enquiry!.id,
+                                                ),
+                                                type: PageTransitionType
+                                                    .rightToLeft));
+
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         EnquireViewMore(
+                                        //       enquiryid: enquiry!.id,
+                                        //     ),
+                                        //   ),
+                                        // );
                                       },
                                       child: Text(
                                         "View more",

@@ -5,6 +5,7 @@ import '../../constants/app_colors.dart';
 import '../../services/comFuncService.dart';
 import 'enquiry_details_model.dart';
 import 'package:shimmer/shimmer.dart';
+
 class EnquireViewMore extends StatefulWidget {
   int enquiryid;
 
@@ -63,7 +64,6 @@ class _EnquireViewMoreState extends State<EnquireViewMore> {
       print(e);
     }
   }
-
 
   //Shimmer
   Widget _buildShimmerPlaceholder() {
@@ -149,7 +149,6 @@ class _EnquireViewMoreState extends State<EnquireViewMore> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,230 +177,243 @@ class _EnquireViewMoreState extends State<EnquireViewMore> {
               },
             )
           : Container(
-        color: Colors.grey[100],
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: DetailSection(
-                      label: "Date of enquiry",
-                      value: enquirydetailslistpage!.createdDate ?? '',
+              color: Colors.grey[100],
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: DetailSection(
+                            label: "Date of enquiry",
+                            value: enquirydetailslistpage!.createdDate ?? '',
+                          ),
+                        ),
+                        Expanded(
+                          child: DetailSection(
+                            label: "Sale Executive",
+                            value: enquirydetailslistpage!.salesExeName ?? '',
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Expanded(
-                    child: DetailSection(
-                      label: "Sale Executive",
-                      value: enquirydetailslistpage!.salesExeName ?? '',
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: DetailSection(
+                            label: "Confirm Date",
+                            value: enquirydetailslistpage!.confirmedDate ??
+                                '', // confirmDate,
+                          ),
+                        ),
+                        Expanded(
+                          child: DetailSection(
+                            label: "Duration",
+                            value: enquirydetailslistpage!.duration ??
+                                '', // duration,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: DetailSection(
-                      label: "Confirm Date",
-                      value: enquirydetailslistpage!.confirmedDate ??
-                          '', // confirmDate,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: DetailSection(
+                            label: "Amount",
+                            value: enquirydetailslistpage!.totalAmount
+                                .toString(), // amount,
+                          ),
+                        ),
+                        Expanded(
+                          child: DetailSection(
+                            label: "Closing Date",
+                            value: enquirydetailslistpage!.closedDate ??
+                                '', // closingDate,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Expanded(
-                    child: DetailSection(
-                      label: "Duration",
-                      value:
-                          enquirydetailslistpage!.duration ?? '', // duration,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: DetailSection(
-                      label: "Amount",
-                      value: enquirydetailslistpage!.totalAmount
-                          .toString(), // amount,
-                    ),
-                  ),
-                  Expanded(
-                    child: DetailSection(
-                      label: "Closing Date",
-                      value: enquirydetailslistpage!.closedDate ??
-                          '', // closingDate,
-                    ),
-                  ),
-                ],
-              ),
-              Align(
-                alignment: Alignment.centerLeft, // Aligns the text to the left
-                child: Text(
-                  "Team Involved",
-                  style: TextStyle(
-                    color: Color(0xFF01519D),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: DetailSection(
-                      label: "Project Engineer",
-                      value: enquirydetailslistpage!.projEngName ??
-                          '', // projectEngineer,
-                    ),
-                  ),
-                  Expanded(
-                    child: DetailSection(
-                      label: "Engineer Admin",
-                      value: enquirydetailslistpage!.engAdmin ??
-                          '', // engineerAdmin,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: DetailSection(
-                      label: "Department Engineer",
-                      value: enquirydetailslistpage!.deptEngName ??
-                          '', // departmentEngineer,
-                    ),
-                  ),
-                  Expanded(
-                    child: DetailSection(
-                      label: "Engineer",
-                      value: enquirydetailslistpage!.enginnersName ??
-                          '', // engineer,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: DetailSection(
-                      label: "Project Safety Coordinator",
-                      value: enquirydetailslistpage!.safetyEngName ??
-                          '', // projectSafetyCoordinator,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: DetailSection(
-                      label: "Total Service",
-                      value: enquirydetailslistpage!.totalServices
-                          .toString(), // totalService,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 400,
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border:
-                            Border.all(color: Colors.grey.shade200, width: 1.0),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Column(
-                          children: [
-                            // Table Header
-                            Container(
-                              color: Colors.white,
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12.0, horizontal: 8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Expanded(
-                                      child: Text("Payment Date",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold))),
-                                  Expanded(
-                                      child: Text("Payment Mode",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold))),
-                                  Expanded(
-                                      child: Text("Payment Amount",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold))),
-                                ],
-                              ),
-                            ),
-                            // Table Rows
-                            Expanded(
-                              child: ListView.builder(
-                                itemCount: enquirydetailslistpage
-                                        ?.paymentHistory.length ??
-                                    0,
-                                itemBuilder: (context, index) {
-                                  final payment = enquirydetailslistpage
-                                      ?.paymentHistory[index];
-
-                                  return Container(
-                                    color: index % 2 == 0
-                                        ? Colors.blue[50]
-                                        : Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 12.0, horizontal: 8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                            child: Text(payment!.createdDate ??
-                                                "")), // Date
-                                        Expanded(
-                                            child: Text(payment.paymentMode ??
-                                                "")), // Mode
-                                        Expanded(
-                                            child: Text(payment.amount ??
-                                                "")), // Amount
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
+                    Align(
+                      alignment:
+                          Alignment.centerLeft, // Aligns the text to the left
+                      child: Text(
+                        "Team Involved",
+                        style: TextStyle(
+                          color: Color(0xFF01519D),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
                         ),
                       ),
                     ),
-                  ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: DetailSection(
+                            label: "Project Engineer",
+                            value: enquirydetailslistpage!.projEngName ??
+                                '', // projectEngineer,
+                          ),
+                        ),
+                        Expanded(
+                          child: DetailSection(
+                            label: "Engineer Admin",
+                            value: enquirydetailslistpage!.engAdminName ??
+                                '', // engineerAdmin,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: DetailSection(
+                            label: "Department Engineer",
+                            value: enquirydetailslistpage!.deptEngName ??
+                                '', // departmentEngineer,
+                          ),
+                        ),
+                        Expanded(
+                          child: DetailSection(
+                            label: "Engineer",
+                            value: enquirydetailslistpage!.enginnersName ??
+                                '', // engineer,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: DetailSection(
+                            label: "Project Safety Coordinator",
+                            value: enquirydetailslistpage!.safetyEngName ??
+                                '', // projectSafetyCoordinator,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: DetailSection(
+                            label: "Total Amount",
+                            value: enquirydetailslistpage!.totalAmount
+                                .toString(), // totalService,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    if (enquirydetailslistpage?.paymentHistory != null)
+                      if (enquirydetailslistpage?.paymentHistory.length != 0)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            height: 400,
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.grey.shade200, width: 1.0),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  child: Column(
+                                    children: [
+                                      // Table Header
+                                      Container(
+                                        color: Colors.white,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 12.0, horizontal: 8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: const [
+                                            Expanded(
+                                                child: Text("Payment Date",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold))),
+                                            Expanded(
+                                                child: Text("Payment Mode",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold))),
+                                            Expanded(
+                                                child: Text("Payment Amount",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold))),
+                                          ],
+                                        ),
+                                      ),
+                                      // Table Rows
+                                      Expanded(
+                                        child: ListView.builder(
+                                          itemCount: enquirydetailslistpage
+                                                  ?.paymentHistory.length ??
+                                              0,
+                                          itemBuilder: (context, index) {
+                                            final payment =
+                                                enquirydetailslistpage
+                                                    ?.paymentHistory[index];
 
-                  // PaymentTableScreen(),
+                                            return Container(
+                                              color: index % 2 == 0
+                                                  ? Colors.blue[50]
+                                                  : Colors.white,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 12.0,
+                                                      horizontal: 8.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Expanded(
+                                                      child: Text(payment!
+                                                              .createdDate ??
+                                                          "")), // Date
+                                                  Expanded(
+                                                      child: Text(
+                                                          payment.paymentMode ??
+                                                              "")), // Mode
+                                                  Expanded(
+                                                      child: Text(
+                                                          payment.amount ??
+                                                              "")), // Amount
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            // PaymentTableScreen(),
+                          ),
+                        ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

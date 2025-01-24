@@ -53,6 +53,7 @@ dependencies:
   onesignal_flutter: ^3.3.0
   shimmer: ^3.0.0
   pie_chart: ^5.0.0
+  page_transition: ^2.1.0
 
 
 dev_dependencies:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:shimmer/shimmer.dart';
 import '../constants/app_assets.dart';
 import '../constants/app_colors.dart';
@@ -215,13 +216,22 @@ class _ServicePageState extends State<ServicePage> {
                                   0.25, // Adjust width for the button
                               onTap: () {
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AddEnquiryPage(
-                                      serviceName: service.name.toString(),
-                                    ),
-                                  ),
-                                );
+                                    context,
+                                    PageTransition(
+                                        duration: Duration(milliseconds: 500),
+                                        reverseDuration: Duration(seconds: 1),
+                                        child: AddEnquiryPage(
+                                          serviceName: service.name.toString(),
+                                        ),
+                                        type: PageTransitionType.rightToLeft));
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => AddEnquiryPage(
+                                //       serviceName: service.name.toString(),
+                                //     ),
+                                //   ),
+                                // );
                               },
                               borderRadius: 12.0,
                               color: AppColors.light,
