@@ -177,21 +177,21 @@ class _Admin_DashboardscreenState extends State<Admin_Dashboardscreen> {
                         ),
                       ),
                     const SizedBox(height: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFD8FFEE),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Text(
-                        '8% ↑ Last month',
-                        style: TextStyle(
-                          color: Color(0xFF0CC172),
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: 12, vertical: 4),
+                    //   decoration: BoxDecoration(
+                    //     color: Color(0xFFD8FFEE),
+                    //     borderRadius: BorderRadius.circular(12),
+                    //   ),
+                    //   child: const Text(
+                    //     '8% ↑ Last month',
+                    //     style: TextStyle(
+                    //       color: Color(0xFF0CC172),
+                    //       fontSize: 14,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
 

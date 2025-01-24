@@ -299,18 +299,18 @@ class _EnquireViewMoreState extends State<EnquireViewMore> {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: DetailSection(
-                            label: "Total Amount",
-                            value: enquirydetailslistpage!.totalAmount
-                                .toString(), // totalService,
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Expanded(
+                    //       child: DetailSection(
+                    //         label: "Total Amount",
+                    //         value: enquirydetailslistpage!.totalAmount
+                    //             .toString(), // totalService,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 10.0,
                     ),

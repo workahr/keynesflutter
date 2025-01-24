@@ -394,7 +394,7 @@ class _EnquirePageState extends State<EnquirePage> {
                                                 duration:
                                                     Duration(milliseconds: 500),
                                                 reverseDuration:
-                                                    Duration(seconds: 1),
+                                                    Duration(milliseconds: 300),
                                                 child: EnquireViewMore(
                                                   enquiryid: enquiry!.id,
                                                 ),

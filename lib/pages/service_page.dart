@@ -219,7 +219,8 @@ class _ServicePageState extends State<ServicePage> {
                                     context,
                                     PageTransition(
                                         duration: Duration(milliseconds: 500),
-                                        reverseDuration: Duration(seconds: 1),
+                                        reverseDuration:
+                                            Duration(milliseconds: 500),
                                         child: AddEnquiryPage(
                                           serviceName: service.name.toString(),
                                         ),
