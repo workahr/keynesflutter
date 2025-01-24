@@ -1,5 +1,5 @@
 class AppConstants {
-  static const appVersion = '1.0.0';
+  static const appVersion = '1.0.1';
   static const apiBaseUrl = 'https://keynesgroupuae.com/api/v1/';
 
   // 'https://phpstack-1330440-4910917.cloudwaysapps.com/api/v1/'; // change here before work
