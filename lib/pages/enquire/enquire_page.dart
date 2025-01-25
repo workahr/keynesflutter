@@ -392,9 +392,9 @@ class _EnquirePageState extends State<EnquirePage> {
                                             context,
                                             PageTransition(
                                                 duration:
-                                                    Duration(milliseconds: 500),
+                                                    Duration(milliseconds: 250),
                                                 reverseDuration:
-                                                    Duration(milliseconds: 300),
+                                                    Duration(milliseconds: 250),
                                                 child: EnquireViewMore(
                                                   enquiryid: enquiry!.id,
                                                 ),

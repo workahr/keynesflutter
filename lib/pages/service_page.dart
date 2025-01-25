@@ -218,9 +218,9 @@ class _ServicePageState extends State<ServicePage> {
                                 Navigator.push(
                                     context,
                                     PageTransition(
-                                        duration: Duration(milliseconds: 500),
+                                        duration: Duration(milliseconds: 250),
                                         reverseDuration:
-                                            Duration(milliseconds: 500),
+                                            Duration(milliseconds: 250),
                                         child: AddEnquiryPage(
                                           serviceName: service.name.toString(),
                                         ),
