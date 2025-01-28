@@ -42,7 +42,7 @@ class DashboardRecordModel {
 }
 
 class Record {
-  int totalpayment;
+  double totalpayment;
   double paidpayment;
   double balancepayment;
   int closeEnquiry;
