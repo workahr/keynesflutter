@@ -54,6 +54,10 @@ dependencies:
   shimmer: ^3.0.0
   pie_chart: ^5.0.0
   page_transition: ^2.1.0
+  pdf: ^3.11.3
+  path_provider: ^2.1.5
+  permission_handler: ^11.3.1
+  open_file: ^3.5.4
 
 
 dev_dependencies:
@@ -94,6 +98,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/NotoNaskhArabic-Regular.ttf
+          weight: 500
+        - asset: assets/fonts/NotoNaskhArabic-Bold.ttf
+          weight: 700
   # fonts:
   #   - family: Schyler
   #     fonts:

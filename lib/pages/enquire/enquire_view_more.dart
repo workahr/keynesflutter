@@ -27,7 +27,7 @@ class _EnquireViewMoreState extends State<EnquireViewMore> {
     super.initState();
   }
 
-  Record? enquirydetailslistpage;
+  EnquiryDetail? enquirydetailslistpage;
   bool isLoading = false;
 
   Future<void> getenquirybyadmin_app() async {
@@ -307,7 +307,7 @@ class _EnquireViewMoreState extends State<EnquireViewMore> {
                         Expanded(
                           child: DetailSection(
                             label: "Project Status",
-                            value: enquirydetailslistpage!.enquiryStatus ??
+                            value: enquirydetailslistpage!.projectStatus ??
                                 '', // projectSafetyCoordinator,
                           ),
                         ),

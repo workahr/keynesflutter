@@ -13,7 +13,7 @@ String enquirydetailsListmodelToJson(EnquirydetailsListmodel data) =>
 class EnquirydetailsListmodel {
   String status;
   String code;
-  Record record;
+  EnquiryDetail record;
   String message;
 
   EnquirydetailsListmodel({
@@ -27,7 +27,7 @@ class EnquirydetailsListmodel {
       EnquirydetailsListmodel(
         status: json["status"],
         code: json["code"],
-        record: Record.fromJson(json["record"]),
+        record: EnquiryDetail.fromJson(json["record"]),
         message: json["message"],
       );
 
@@ -39,7 +39,7 @@ class EnquirydetailsListmodel {
       };
 }
 
-class Record {
+class EnquiryDetail {
   int id;
   int? serviceId;
   String? clientName;
@@ -121,7 +121,7 @@ class Record {
   String? enginnersName;
   String? totalAmount;
 
-  Record({
+  EnquiryDetail({
     required this.id,
     this.serviceId,
     this.clientName,
@@ -204,7 +204,7 @@ class Record {
     this.totalAmount,
   });
 
-  factory Record.fromJson(Map<String, dynamic> json) => Record(
+  factory EnquiryDetail.fromJson(Map<String, dynamic> json) => EnquiryDetail(
         id: json["id"],
         serviceId: json["service_id"],
         clientName: json["client_name"],

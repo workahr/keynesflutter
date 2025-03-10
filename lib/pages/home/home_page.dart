@@ -81,9 +81,12 @@ class _HomeScreenState extends State<HomeScreen> {
               )) // Correct logout icon
         ],
         toolbarHeight: 90,
-        title: Padding(
-            padding: const EdgeInsets.all(50.0),
-            child: Row(
+        title: 
+        // Padding(
+        //     padding: const EdgeInsets.all(20.0),
+        //     child:
+             Row(
+             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Image.asset(
                   AppAssets.keynesLogo,
@@ -103,7 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 )
               ],
-            )),
+          //  )
+            ),
         centerTitle: true,
         backgroundColor: const Color(0xFF01519D),
         automaticallyImplyLeading: false,
